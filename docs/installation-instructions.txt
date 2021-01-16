@@ -1,0 +1,11 @@
+Installation instructions:
+
+1. Open XAMPP Control Panel
+2. Start Apache
+3. Start MySQL
+4. Execute config.php using the URL http://localhost/Alumni-Album/config/config-db.php
+   !!! Alumni-Album project should be in *\xampp\htdocs directory
+5. To inspect the created database and tables go to http://localhost/phpmyadmin/ 
+   OR
+   Open XAMPP Control Panel
+   Click "Admin" next to "MySQL"
