@@ -8,6 +8,8 @@ $requestURL = $_SERVER["REQUEST_URI"];
 
 if (preg_match("/register$/", $requestURL)) {
     register();
+} else if (preg_match("/login$/", $requestURL)) {
+    login();
 } else {
     echo json_encode(["success" => false, "error" => "URL not found"]);
 }
@@ -54,5 +56,63 @@ function registerUsers($filePath)
     } else {
         // error opening the file.
         return false;
+    }
+}
+
+function login()
+{
+    $errors = [];
+    $response = [];
+
+    if ($_POST) {
+        $data = json_decode($_POST["data"], true);
+
+        $username = isset($data["username"]) ? testInput($data["username"]) : "";
+        $password = isset($data["password"]) ? testInput($data["password"]) : "";
+        $admin = isset($data["admin"]) ? $data["admin"] : false;
+
+        if (!$username) {
+            $errors[] = "Input username";
+        }
+
+        if (!$password) {
+            $errors[] = "Input password";
+        }
+
+        if ($username && $password) {
+            $isValidUser = isUserValid($username, $password, $admin);
+            if ($isValidUser["success"]) {
+                $_SESSION["username"] = $username;
+            } else {
+                $errors[] = $isValidUser["data"];
+            }
+        }
+    } else {
+        $errors[] = "Invalid request";
+    }
+
+    if ($errors) {
+        $response = ["success" => false, "error" => $errors];
+    } else {
+        $response = ["success" => true];
+    }
+
+    echo json_encode($response);
+}
+
+function isUserValid($username, $password, $admin)
+{
+    $db = new Database();
+    $query = $db->selectUserQuery(["username" => $username, "password" => $password, "admin" => $admin]);
+
+    if ($query["success"]) {
+        $user = $query["data"]->fetch(PDO::FETCH_ASSOC);
+        if ($user) {
+            return ["success" => true];
+        } else {
+            return ["success" => false, "data" => 'Invalid user'];
+        }
+    } else {
+        return ["success" => false, "data" => $query];
     }
 }

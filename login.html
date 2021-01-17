@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+
+    <script defer src="script/ajax.js"></script>
+    <script defer src="script/login.js"></script>
+</head>
+
+<body>
+    <div id="page">
+        <header>
+            <h1>Alumni Album</h1>
+            <h2>Login</h2>
+        </header>
+        <form id="loginForm">
+            <input type="text" id="username" placeholder="Username"><br>
+            <input type="password" id="password" placeholder="Password"><br>
+            <select name="access" id="access" placeholder="Access">
+                <option value="admin">Admin</option>
+                <option value="user">Обикновен човек съм си</option>
+            </select><br>
+            <input id="loginButton" type="submit" value="Log in"><br>
+        </form>
+    </div>
+</body>
+
+</html>
