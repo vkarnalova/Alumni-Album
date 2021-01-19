@@ -10,6 +10,8 @@ if (preg_match("/register$/", $requestURL)) {
     register();
 } else if (preg_match("/login$/", $requestURL)) {
     login();
+} else if (preg_match("/upload$/", $requestURL)) {
+    upload();
 } else {
     echo json_encode(["success" => false, "error" => "URL not found"]);
 }
@@ -85,6 +87,51 @@ function login()
                 $_SESSION["username"] = $username;
             } else {
                 $errors[] = $isValidUser["data"];
+            }
+        }
+    } else {
+        $errors[] = "Invalid request";
+    }
+
+    if ($errors) {
+        $response = ["success" => false, "error" => $errors];
+    } else {
+        $response = ["success" => true];
+    }
+
+    echo json_encode($response);
+}
+
+function upload()
+{
+    $errors = [];
+    $response = [];
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $finfo = new finfo(FILEINFO_MIME_TYPE);
+        $ext = array_search(
+            $finfo->file($_FILES['file']['tmp_name']),
+            array(
+                'jpg' => 'image/jpeg',
+                'png' => 'image/png',
+                'gif' => 'image/gif',
+            ),
+            true
+        );
+
+        if (!$ext) {
+            $errors[] = "Invalid file format";
+        } else {
+            // Move file
+            if (!move_uploaded_file(
+                $_FILES['file']['tmp_name'],
+                sprintf(
+                    '../uploads/%s.%s',
+                    sha1_file($_FILES['file']['tmp_name']),
+                    $ext
+                )
+            )) {
+                $errors[] = 'Failed to move uploaded file.';
             }
         }
     } else {
