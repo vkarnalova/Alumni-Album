@@ -9,3 +9,5 @@ Installation instructions:
    OR
    Open XAMPP Control Panel
    Click "Admin" next to "MySQL"
+6. Exectue config-mail.php using URL http://localhost/Alumni-Album/config/config-mail.php
+   !!! Restart your Apache Module!
