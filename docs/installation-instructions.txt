@@ -3,11 +3,31 @@ Installation instructions:
 1. Open XAMPP Control Panel
 2. Start Apache
 3. Start MySQL
-4. Execute config.php using the URL http://localhost/Alumni-Album/config/config-db.php
+4. Start Mercury
+6. Execute config.php using the URL http://localhost/Alumni-Album/config/config-db.php
    !!! Alumni-Album project should be in *\xampp\htdocs directory
-5. To inspect the created database and tables go to http://localhost/phpmyadmin/ 
+6. To inspect the created database and tables go to http://localhost/phpmyadmin/ 
    OR
    Open XAMPP Control Panel
    Click "Admin" next to "MySQL"
-6. Exectue config-mail.php using URL http://localhost/Alumni-Album/config/config-mail.php
-   !!! Restart your Apache Module!
+7. Exectue config-mail.php using URL http://localhost/Alumni-Album/config/config-mail.php
+	!!! Restart your Apache Module after exectuing the file!
+	The file modifies the following configuration settings:
+		C:\xampp\sendmail\sendmail.ini
+			1. changes smtp_server=mail.yourdomain.com to smtp_server=smtp.gmail.com
+			2. changes smtp_port to smtp_port=587
+			3. changes smtp_ssl=auto to smtp_ssl=tls
+			4. uncomments ;error_logfile=error.log to error_logfile=error.log
+			5. uncomments ;debug_logfile=debug.log to debug_logfile=debug.log
+			6. sets auth_username=alumnialbummail@gmail.com
+			7. sets auth_password to ****************
+			8. sets force_sender=alumnialbummail@gmail.com
+			9. sets hostname=localhost
+		C:\xampp\php\php.ini
+			1. comments SMTP=localhost to ;SMTP=localhost
+			2. comments smtp_port=25 to ;smtp_port=25
+			3. comments sendmail_from= to ;sendmail_from=
+			4. sets sendmail_path=C:\xampp\sendmail\sendmail.exe
+			5. uncomments extension=php_openssl.dll 
+			
+	  
