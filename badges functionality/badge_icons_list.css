@@ -1,0 +1,23 @@
+﻿form img {
+	width: 40px;
+	height: 40px;
+}
+
+form img:hover {
+	width: 55px;
+	height: 55px;
+}
+
+form td {
+	width: 65px;
+	height: 65px;
+}
+
+input[type="radio"] {
+	display: none;
+}
+
+input[type="radio"]:checked + img {
+	padding: 2px;
+	background-color: #66ff99; //рандом цвят; да се смени - този е грозен;
+}
