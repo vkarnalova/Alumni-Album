@@ -1,3 +1,3 @@
-karnalova,velina@gmail.com
-rosina,rosina@gmail.com
-maria,maria@gmail.com
+Velina,vkarnalova@uni-sofia.bg
+Rosina,rosinaig@uni-sofia.bg
+Maria,msbaleva@uni-sofia.bg

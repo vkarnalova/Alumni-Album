@@ -1,0 +1,77 @@
+<?php
+
+function startsWith ($string, $startString) { 
+    $len = strlen($startString); 
+    return (substr($string, 0, $len) === $startString); 
+} 
+
+function modifySendmailIni() {
+	$configfile = fopen("C:\\xampp\\sendmail\\sendmail.ini", "r") or die("Unable to open file!");
+	$content = "";
+    while (($line = fgets($configfile)) !== false) {
+        if (startsWith($line, "smtp_server")) {
+			$content .= "smtp_server=smtp.gmail.com\n";
+		} else if (startsWith($line, "smtp_port")) {
+			$content .= "smtp_port=587\n";
+		} else if (startsWith($line, "smtp_ssl")) {
+			$content .= "smtp_ssl=tls\n";
+		} else if (startsWith($line, ";error_logfile")) {
+			$content .= "error_logfile=error.log\n";
+		} else if (startsWith($line, ";debug_logfile")) {
+			$content .= "debug_logfile=debug.log\n";
+		} else if (startsWith($line, "auth_username")) {
+			$content .= "auth_username=alumnialbummail@gmail.com\n";
+		} else if (startsWith($line, "auth_password")) {
+			$content .= "auth_password=Alumni-Album1\n";
+		} else if (startsWith($line, "force_sender")) {
+			$content .= "force_sender=alumnialbummail@gmail.com\n";
+		} else if (startsWith($line, "hostname")) {
+			$content .= "hostname=localhost\n";
+		} else {
+			$content .= $line;
+		}
+    }
+	
+    fclose($configfile);	
+	file_put_contents("C:\\xampp\\sendmail\\sendmail.ini", $content);
+}
+
+function modifyPhpIni() {
+	$configfile = fopen("C:\\xampp\\php\\php.ini", "r") or die("Unable to open file!");
+	$content = "";
+	while (($line = fgets($configfile)) !== false) {
+		$content .= $line;
+		if (startsWith($line, "[mail function]")) {
+			break;
+		}
+	}
+	
+    while (($line = fgets($configfile)) !== false) {
+        if (startsWith($line, "SMTP=localhost")) {
+			$content .= ";" . "$line";
+		} else if (startsWith($line, "smtp_port")) {
+			$content .= ";" . "$line";
+		} else if (startsWith($line, "sendmail_from")) {
+			$content .= ";" . "$line";
+		} else if (startsWith($line, ";sendmail_path") || startsWith($line, "sendmail_path")) {
+			$content .= "sendmail_path=C:\\xampp\\sendmail\\sendmail.exe\n";
+		} else if (startsWith($line, ";extension=php_openssl.dll")) {
+			$content .= "extension=php_openssl.dll\n";
+		} else {
+			$content .= $line;
+		}
+    }
+	
+    fclose($configfile);	
+	file_put_contents("C:\\xampp\\php\\php.ini", $content);
+}
+
+try {
+   
+	modifySendMailIni();
+	modifyPhpIni();
+
+    
+} catch (PDOException $error) {
+    echo $error->getMessage();
+}
