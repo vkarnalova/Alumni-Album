@@ -174,7 +174,7 @@ function generateRandomPassword() {
         $n = rand(0, $alphaLength);
         $pass[] = $alphabet[$n];
     }
-    return implode($pass);
+    return implode("", $pass);
 }
 
 function mailPasswordToUser($username, $password, $email) {
