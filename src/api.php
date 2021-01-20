@@ -44,15 +44,15 @@ function register()
 function registerUsers($filePath)
 {
     $db = new Database();
-	
+
     $handle = fopen($filePath, "r");
     if ($handle) {
         while (($line = fgets($handle)) !== false) {
             // process the line 
             list($username, $email) = explode(',', $line);
-			$pass = generateRandomPassword();
+            $pass = generateRandomPassword();
             $db->insertUserQuery(["user" => $username, "password" => $pass, "email" => $email, "admin" => false]);
-			mailPasswordToUser($username, $pass, $email);
+            mailPasswordToUser($username, $pass, $email);
         }
 
         fclose($handle);
@@ -125,15 +125,19 @@ function upload()
             $errors[] = "Invalid file format";
         } else {
             // Move file
+            $fileNameHash = sha1_file($_FILES['file']['tmp_name']);
             if (!move_uploaded_file(
                 $_FILES['file']['tmp_name'],
                 sprintf(
                     '../uploads/%s.%s',
-                    sha1_file($_FILES['file']['tmp_name']),
+                    $fileNameHash,
                     $ext
                 )
             )) {
                 $errors[] = 'Failed to move uploaded file.';
+            } else {
+                $tags = json_decode($_POST["tags"]);
+                addPhotoToDatabase($fileNameHash . '.' . $ext, $tags);
             }
         }
     } else {
@@ -166,10 +170,11 @@ function isUserValid($username, $password, $admin)
     }
 }
 
-function generateRandomPassword() {
+function generateRandomPassword()
+{
     $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
-    $pass = array(); 
-    $alphaLength = strlen($alphabet) - 1; 
+    $pass = array();
+    $alphaLength = strlen($alphabet) - 1;
     for ($i = 0; $i < 8; $i++) {
         $n = rand(0, $alphaLength);
         $pass[] = $alphabet[$n];
@@ -177,9 +182,10 @@ function generateRandomPassword() {
     return implode("", $pass);
 }
 
-function mailPasswordToUser($username, $password, $email) {
-	$subject = "Alumni Album Account Password";
-	$message = "Greetings, " . "$username" . "!\nWelcome to Alumni Album!\nYour account password is: " . "$password" . "\nYou could always change it in your profile settings.\nHave fun!";
-	
-	mail($email, $subject, $message);
+function mailPasswordToUser($username, $password, $email)
+{
+    $subject = "Alumni Album Account Password";
+    $message = "Greetings, " . "$username" . "!\nWelcome to Alumni Album!\nYour account password is: " . "$password" . "\nYou could always change it in your profile settings.\nHave fun!";
+
+    mail($email, $subject, $message);
 }

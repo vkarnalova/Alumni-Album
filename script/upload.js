@@ -18,14 +18,23 @@ window.onload = function () {
 }
 
 function uploadFiles() {
+    var tags = [];
+    var tagElements = document.getElementsByClassName("tag");
+    for (var i = 0; i < tagElements.length; i++) {
+        if (tagElements[i].value) {
+            tags.push(tagElements[i].value);
+        }
+    }
+
     fileList.forEach(function (file) {
-        uploadFile(file);
+        uploadFile(file, tags);
     });
 }
 
-function uploadFile(file) {
+function uploadFile(file, tags) {
     var data = new FormData()
     data.append('file', file);
+    data.append('tags', JSON.stringify(tags));
 
     const settings = {
         method: 'POST',
