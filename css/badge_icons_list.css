@@ -1,0 +1,82 @@
+﻿
+input, textarea {
+	height: 30px;
+	margin: 5px;
+	width: 300px;
+	border: none;
+    border-bottom: 2px solid  #29b4d3;  
+    -webkit-transition: width 0.5s ease-in-out;
+    transition: width 0.5s ease-in-out;
+	outline: none;
+}
+
+textarea {
+	height: 25px;
+}
+
+#badgeSection {
+	text-align: right;
+}
+
+#badge_form section {
+	margin: 50px;
+}
+
+.badgeDescriptionContainer * {
+	vertical-align: middle;
+}
+
+#badge_form {
+	display: flex;
+}
+
+
+input:focus, textarea:focus {
+    border-bottom: 2px solid  #1d8ba3; 
+}
+
+#submit_button {
+    border: none;
+    border-radius: 10px;
+    color: white;
+	background-color: #29b4d3;
+	margin: 10px;
+}
+
+#submit_button:hover {
+	-moz-transition: color 0.35s ease-in-out, background-color 0.35s ease-in-out;
+	-webkit-transition: color 0.35s ease-in-out, background-color 0.35s ease-in-out;
+	-o-transition: color 0.35s ease-in-out, background-color 0.35s ease-in-out;
+	-ms-transition: color 0.35s ease-in-out, background-color 0.35s ease-in-out;
+	transition: color 0.35s ease-in-out, background-color 0.35s ease-in-out;
+	cursor: pointer;
+	background-color: #ebe0cc;
+	color: #29b4d3;
+	border: none;
+}
+
+
+
+form img {
+	width: 55px;
+	height: 55px;
+}
+
+form img:hover {
+	width: 70px;
+	height: 70px;
+}
+
+form td {
+	width: 80px;
+	height: 80px;
+}
+
+input[type="radio"] {
+	display: none;
+}
+
+input[type="radio"]:checked + img {
+	padding: 2px;
+	border:  solid  #29b4d3;
+}

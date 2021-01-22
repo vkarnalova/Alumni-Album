@@ -1,0 +1,44 @@
+
+#loginFormSection {
+	text-align: center;
+}
+
+input, select {
+	height: 30px;
+	margin: 5px;
+	width: 300px;
+	border: none;
+    border-bottom: 2px solid  #29b4d3;  
+    -webkit-transition: width 0.5s ease-in-out;
+    transition: width 0.5s ease-in-out;
+    outline: none;
+}
+
+input:focus {
+    border-bottom: 2px solid  #1d8ba3; 
+}
+
+#loginButton {
+    border: none;
+    border-radius: 10px;
+    color: white;
+	background-color: #29b4d3;
+	margin: 10px;
+}
+
+select {
+    height: 34px;
+}
+
+
+#loginButton:hover {
+	-moz-transition: color 0.35s ease-in-out, background-color 0.35s ease-in-out;
+	-webkit-transition: color 0.35s ease-in-out, background-color 0.35s ease-in-out;
+	-o-transition: color 0.35s ease-in-out, background-color 0.35s ease-in-out;
+	-ms-transition: color 0.35s ease-in-out, background-color 0.35s ease-in-out;
+	transition: color 0.35s ease-in-out, background-color 0.35s ease-in-out;
+	cursor: pointer;
+	background-color: #ebe0cc;
+	color: #29b4d3;
+	border: none;
+}
