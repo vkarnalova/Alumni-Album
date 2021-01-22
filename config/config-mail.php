@@ -5,8 +5,8 @@ function startsWith ($string, $startString) {
     return (substr($string, 0, $len) === $startString); 
 } 
 
-function modifySendmailIni($sendMailIniPath) {
-	$configfile = fopen($sendMailIniPath, "r") or die("Unable to open file!");
+function modifySendmailIni() {
+	$configfile = fopen("C:\\xampp\\sendmail\\sendmail.ini", "r") or die("Unable to open file!");
 	$content = "";
     while (($line = fgets($configfile)) !== false) {
         if (startsWith($line, "smtp_server")) {
@@ -33,11 +33,11 @@ function modifySendmailIni($sendMailIniPath) {
     }
 	
     fclose($configfile);	
-	file_put_contents($sendMailIniPath, $content);
+	file_put_contents("C:\\xampp\\sendmail\\sendmail.ini", $content);
 }
 
-function modifyPhpIni($phpIniPath, $sendMailExePath) {
-	$configfile = fopen($phpIniPath, "r") or die("Unable to open file!");
+function modifyPhpIni() {
+	$configfile = fopen("C:\\xampp\\php\\php.ini", "r") or die("Unable to open file!");
 	$content = "";
 	while (($line = fgets($configfile)) !== false) {
 		$content .= $line;
@@ -54,7 +54,7 @@ function modifyPhpIni($phpIniPath, $sendMailExePath) {
 		} else if (startsWith($line, "sendmail_from")) {
 			$content .= ";" . "$line";
 		} else if (startsWith($line, ";sendmail_path") || startsWith($line, "sendmail_path")) {
-			$content .= "sendmail_path=" . "$sendMailExePath" . "\n";
+			$content .= "sendmail_path=C:\\xampp\\sendmail\\sendmail.exe\n";
 		} else if (startsWith($line, ";extension=php_openssl.dll")) {
 			$content .= "extension=php_openssl.dll\n";
 		} else {
@@ -63,15 +63,13 @@ function modifyPhpIni($phpIniPath, $sendMailExePath) {
     }
 	
     fclose($configfile);	
-	file_put_contents($phpIniPath, $content);
+	file_put_contents("C:\\xampp\\php\\php.ini", $content);
 }
 
 try {
-	$sendMailIniPath = "C:\\xampp\\sendmail\\sendmail.ini";
-	$phpIniPath = "C:\\xampp\\php\\php.ini";
-	$sendMailExePath = "C:\\xampp\\sendmail\\sendmail.exe";
-	modifySendMailIni($sendMailIniPath);
-	modifyPhpIni($phpIniPath, $sendMailExePath);
+   
+	modifySendMailIni();
+	modifyPhpIni();
 
     
 } catch (PDOException $error) {

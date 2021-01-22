@@ -11,10 +11,9 @@ Installation instructions:
    Open XAMPP Control Panel
    Click "Admin" next to "MySQL"
 7. Exectue config-mail.php using URL http://localhost/Alumni-Album/config/config-mail.php
-	!!! If Xampp is not located on C:\\, change $sendMailIniPath, $phpIniPath, $sendMailExePath in the script.
 	!!! Restart your Apache Module after exectuing the file!
 	The file modifies the following configuration settings:
-		..\xampp\sendmail\sendmail.ini
+		C:\xampp\sendmail\sendmail.ini
 			1. changes smtp_server=mail.yourdomain.com to smtp_server=smtp.gmail.com
 			2. changes smtp_port to smtp_port=587
 			3. changes smtp_ssl=auto to smtp_ssl=tls
@@ -24,7 +23,7 @@ Installation instructions:
 			7. sets auth_password to ****************
 			8. sets force_sender=alumnialbummail@gmail.com
 			9. sets hostname=localhost
-		..\xampp\php\php.ini
+		C:\xampp\php\php.ini
 			1. comments SMTP=localhost to ;SMTP=localhost
 			2. comments smtp_port=25 to ;smtp_port=25
 			3. comments sendmail_from= to ;sendmail_from=
