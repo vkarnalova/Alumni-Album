@@ -60,6 +60,17 @@ try {
     )";
     $connection->exec($sql);
 
+    // Create badges table
+    $sql = "CREATE TABLE badges(
+		assignedUser VARCHAR(30) NOT NULL,
+		assigningUser VARCHAR(30) NOT NULL,
+		title VARCHAR(30) NOT NULL,
+		description VARCHAR(255),
+		iconId int NOT NULL,
+		PRIMARY KEY (assignedUser, assigningUser, title)
+	)";
+	$connection->exec($sql);
+
     // Add admin
     $sql = "INSERT INTO users(username, password, email, admin) VALUES ('admin', 'admin', 'non-existent@gmail.com', 1)";
     $connection->exec($sql);
