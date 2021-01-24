@@ -27,10 +27,9 @@ function login() {
         body: `data=${JSON.stringify(user)}`
     };
 
-    alert(JSON.stringify(settings));
 
     ajax('src/api.php/login', settings, function (data) {
-        alert(data);
+        window.location.href = 'profile.html'; 
     }, function (error) {
         alert(error);
     },
