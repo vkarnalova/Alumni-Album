@@ -11,7 +11,7 @@ Installation instructions:
    Open XAMPP Control Panel
    Click "Admin" next to "MySQL"
 7. Exectue config-mail.php using URL http://localhost/Alumni-Album/config/config-mail.php
-	!!! If Xampp is not located on C:\\, change $sendMailIniPath, $phpIniPath, $sendMailExePath in the script.
+	!!! Change $sendMailIniPath, $phpIniPath, $sendMailExePath in the script to match the location of Xampp in your filesystem.
 	!!! Restart your Apache Module after exectuing the file!
 	The file modifies the following configuration settings:
 		..\xampp\sendmail\sendmail.ini

@@ -67,9 +67,9 @@ function modifyPhpIni($phpIniPath, $sendMailExePath) {
 }
 
 try {
-	$sendMailIniPath = "C:\\xampp\\sendmail\\sendmail.ini";
-	$phpIniPath = "C:\\xampp\\php\\php.ini";
-	$sendMailExePath = "C:\\xampp\\sendmail\\sendmail.exe";
+	$sendMailIniPath = "D:\\xampp\\sendmail\\sendmail.ini";
+	$phpIniPath = "D:\\xampp\\php\\php.ini";
+	$sendMailExePath = "D:\\xampp\\sendmail\\sendmail.exe";
 	modifySendMailIni($sendMailIniPath);
 	modifyPhpIni($phpIniPath, $sendMailExePath);
 
