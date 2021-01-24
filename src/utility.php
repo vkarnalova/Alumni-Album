@@ -13,16 +13,44 @@ function testInput($input)
 function addPhotoToDatabase($fileName, $tags)
 {
     $db = new Database();
-    $result = $db->insertPhotoQuery(["name" => $fileName]);
-    if (!$result["success"]) {
-        return $result;
-    } else {
-        $photoIdResult = getPhotoId($fileName, $db);
-        if (!$photoIdResult["success"]) {
-            return $photoIdResult;
+
+    if (!isPhotoUploaded($fileName, $db)) {
+        $result = insertPhoto($fileName, $db);
+        if (!$result["success"]) {
+            return $result;
         } else {
-            return addTagsForPhoto($photoIdResult["data"], $tags, $db);
+            $photoId = $result["data"];
+            return addTagsForPhoto($photoId, $tags, $db);
         }
+    } else {
+        return ["success" => false, "data" => "Photo already exists."];
+    }
+}
+
+function isPhotoUploaded($fileName, $db)
+{
+    $query = $db->selectPhotoByNameQuery(["name" => $fileName]);
+
+    if ($query["success"]) {
+        $photo = $query["data"]->fetch(PDO::FETCH_ASSOC);
+        return ($photo) ? true : false;
+    } else {
+        return false;
+    }
+}
+
+function insertPhoto($fileName, $db)
+{
+    $query = $db->insertPhotoQuery(["name" => $fileName]);
+    if ($query["success"]) {
+        $data = $query["data"];
+        if ($data) {
+            return ["success" => true, "data" => $data];
+        } else {
+            return ["success" => false, "data" => 'Invalid photo'];
+        }
+    } else {
+        return ["success" => false, "data" => $query];
     }
 }
 
@@ -44,8 +72,18 @@ function getPhotoId($fileName, $db)
 
 function addTagsForPhoto($photoId, $tags, $db)
 {
+    $errors = [];
     for ($index = 0; $index < count($tags); $index++) {
-        addTagForPhoto($photoId, $tags[$index], $db);
+        $addTagForPhotoResult = addTagForPhoto($photoId, $tags[$index], $db);
+        if (!$addTagForPhotoResult["success"]) {
+            array_push($errors, $addTagForPhotoResult["data"]);
+        }
+    }
+
+    if ($errors) {
+        return ["success" => false, "data" => $errors];
+    } else {
+        return ["success" => true];
     }
 }
 
@@ -53,7 +91,7 @@ function addTagForPhoto($photoId, $tag, $db)
 {
     $getTagIdResult = getTagId($tag, $db);
     if ($getTagIdResult["success"]) {
-        if (in_array("data", $getTagIdResult, true)) {
+        if (array_key_exists("data", $getTagIdResult)) {
             $tagId = $getTagIdResult["data"];
         } else {
             // If the tag is not present, add id
@@ -94,9 +132,9 @@ function addTag($tag, $db)
     $query = $db->insertTagQuery(["text" => $tag]);
 
     if ($query["success"]) {
-        $tag = $query["data"]->fetch(PDO::FETCH_ASSOC);
-        if ($tag) {
-            return ["success" => true, "data" => $tag["id"]];
+        $tagId = $query["data"];
+        if ($tagId) {
+            return ["success" => true, "data" => $tagId];
         } else {
             return ["success" => false];
         }

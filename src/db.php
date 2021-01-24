@@ -91,7 +91,7 @@ class Database
             // ["name" => "..."]
             $this->insertPhotoStatement->execute($data);
 
-            return ["success" => true];
+            return ["success" => true, "data" => $this->connection->lastInsertId()];
         } catch (PDOException $e) {
             return ["success" => false, "error" => $e->getMessage()];
         }
@@ -115,7 +115,7 @@ class Database
             // ["text" => "..."]
             $this->insertTagStatement->execute($data);
 
-            return ["success" => true, "data" => $this->insertTagStatement];
+            return ["success" => true, "data" => $this->connection->lastInsertId()];
         } catch (PDOException $e) {
             return ["success" => false, "error" => $e->getMessage()];
         }
