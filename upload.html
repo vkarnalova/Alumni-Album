@@ -20,8 +20,29 @@
             <input type="file" placeholder="Photo" id="photoInput" multiple><br>
             <input type="text" placeholder="Tag" class="tag"><br>
             <button id="addTagField" type="button">Add other tag</button><br>
+            <h4>Добави повече информация за хората на снимките</h4>
+            <p>Полетата със звезда (*) са задължителни</p>
+            <select name="major" id="major" placeholder="Специалност">
+                <option disabled selected value> -- Избери специалност -- </option>
+                <option value="cs">Компютърни науки</option>
+                <option value="user">Софтуерно инжинирество</option>
+                <option value="user">Информатика</option>
+                <option value="user">Информационни системи</option>
+                <option value="user">Математика</option>
+                <option value="user">Приложна математика</option>
+                <option value="user">Математика и информатика</option>
+                <option value="user">Статистика</option>
+            </select><br>
+            <input type="number" min="1900" max="2021" step="1" placeholder="Випуск*" id="class"><br>
+            <input type="number" min="1" max="2" step="1" placeholder="Поток" id="potok"><br>
+            <input type="number" min="1" max="8" step="1" placeholder="Група" id="groupNumber"><br>
+            <input type="text" placeholder="Събитие" id="occasion"><br>
+
             <input id=" loginButton" name="submit" type="submit" value="Upload"><br>
         </form>
+        <div id="errors">
+
+        </div>
     </div>
 </body>
 
