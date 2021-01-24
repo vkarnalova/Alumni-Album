@@ -35,9 +35,14 @@ try {
     $sql = "CREATE TABLE photos(
         id int NOT NULL AUTO_INCREMENT,
         name VARCHAR(255) NOT NULL,
+        major VARCHAR(64),
+        class int,
+        potok int,
+        groupNumber int,
+        occasion VARCHAR(255),
         PRIMARY KEY (id)
     )";
-    $connection->exec($sql);
+    $result = $connection->exec($sql);
 
     // Create photo_tag table
     $sql = "CREATE TABLE photo_tag(

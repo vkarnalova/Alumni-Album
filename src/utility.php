@@ -10,12 +10,12 @@ function testInput($input)
     return $input;
 }
 
-function addPhotoToDatabase($fileName, $tags)
+function addPhotoToDatabase($fileName, $tags, $photosInfo)
 {
     $db = new Database();
 
     if (!isPhotoUploaded($fileName, $db)) {
-        $result = insertPhoto($fileName, $db);
+        $result = insertPhoto($fileName, $photosInfo, $db);
         if (!$result["success"]) {
             return $result;
         } else {
@@ -39,9 +39,17 @@ function isPhotoUploaded($fileName, $db)
     }
 }
 
-function insertPhoto($fileName, $db)
+function insertPhoto($fileName, $photosInfo, $db)
 {
-    $query = $db->insertPhotoQuery(["name" => $fileName]);
+    $query = $db->insertPhotoQuery([
+        "name" => $fileName,
+        "major" => $photosInfo->major,
+        "class" => $photosInfo->class,
+        "potok" => $photosInfo->potok,
+        "groupNumber" => $photosInfo->groupNumber,
+        "occasion" => $photosInfo->occasion
+    ]);
+
     if ($query["success"]) {
         $data = $query["data"];
         if ($data) {

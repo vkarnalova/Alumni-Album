@@ -43,7 +43,7 @@ class Database
         $this->selectUserStatement = $this->connection->prepare($sql);
 
         // photos table statements
-        $sql = "INSERT INTO photos(name) VALUES (:name)";
+        $sql = "INSERT INTO photos(name, major, class, potok, groupNumber, occasion) VALUES (:name, :major, :class, :potok, :groupNumber, :occasion)";
         $this->insertPhotoStatement = $this->connection->prepare($sql);
 
         $sql = "SELECT * FROM photos WHERE name=:name";

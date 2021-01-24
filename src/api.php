@@ -125,23 +125,24 @@ function upload()
             $errors[] = "Invalid file format";
         } else {
             // Move file
-            $fileNameHash = sha1_file($_FILES['file']['tmp_name']);
-            if (!move_uploaded_file(
-                $_FILES['file']['tmp_name'],
-                sprintf(
-                    '../uploads/%s.%s',
-                    $fileNameHash,
-                    $ext
-                )
-            )) {
-                $errors[] = 'Failed to move uploaded file.';
-            } else {
-                $tags = json_decode($_POST["tags"]);
+            $tempFileNameWithoutExt = pathinfo($_FILES['file']['tmp_name'])['filename'];
+            $fileNameUniqId = uniqid($tempFileNameWithoutExt);
+            $filePath = sprintf('../uploads/%s.%s', $fileNameUniqId, $ext);
 
-                $addPhotoResult = addPhotoToDatabase($fileNameHash . '.' . $ext, $tags);
-                if (!$addPhotoResult["success"]) {
-                    $errors[] = $addPhotoResult["data"];
+            if (!file_exists($filePath)) {
+                if (move_uploaded_file($_FILES['file']['tmp_name'], $filePath)) {
+                    $tags = json_decode($_POST["tags"]);
+                    $photosInfo = json_decode($_POST["photosInfo"]);
+
+                    $addPhotoResult = addPhotoToDatabase($fileNameUniqId . '.' . $ext, $tags, $photosInfo);
+                    if (!$addPhotoResult["success"]) {
+                        $errors[] = $addPhotoResult["data"];
+                    }
+                } else {
+                    $errors[] = 'Failed to move uploaded file.';
                 }
+            } else {
+                $errors[] = "File alredy exists";
             }
         }
     } else {
