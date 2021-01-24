@@ -190,7 +190,7 @@ function generateRandomPassword()
 function mailPasswordToUser($username, $password, $email)
 {
     $subject = "Alumni Album Account Password";
-    $message = "Greetings, " . "$username" . "!\nWelcome to Alumni Album!\nYour account password is: " . "$password" . "\nYou could always change it in your profile settings.\nHave fun!";
+    $message = "Привет, " . "$username" . "! :)\n\nДобре дошли в Алумни Албум!\nПаролата за вашия потребителски профил е: " . "$password" . " .\nВинаги можете да я смените по-късно от настройките на профила.\n\nПоздрави\nЕкипа на Алумни Албум :)";
 
     mail($email, $subject, $message);
 }
