@@ -1,6 +1,7 @@
 <?php
 require_once "utility.php";
 require_once "db.php";
+require_once "badge.php";
 
 header("Content-type: application/json");
 session_start();
@@ -12,6 +13,8 @@ if (preg_match("/register$/", $requestURL)) {
     login();
 } else if (preg_match("/upload$/", $requestURL)) {
     upload();
+} else if (preg_match("/add-badge$/", $requestURL)) {
+	addBadge();
 } else {
     echo json_encode(["success" => false, "error" => "URL not found"]);
 }
@@ -193,4 +196,36 @@ function mailPasswordToUser($username, $password, $email)
     $message = "Привет, " . "$username" . "! :)\n\nДобре дошли в Алумни Албум!\nПаролата за вашия потребителски профил е: " . "$password" . " .\nВинаги можете да я смените по-късно от настройките на профила.\n\nПоздрави\nЕкипа на Алумни Албум :)";
 
     mail($email, $subject, $message);
+}
+
+function addBadge()
+{
+    $errors = [];
+    $response = [];
+
+    if (isset($_POST)) { 
+        $assignedUser = $_POST["assignedUser"];
+        $assigningUser = $_SESSION["username"];
+        $title = $_POST["title"];
+        $description = $_POST["description"];
+        $iconId = $_POST["iconId"];
+        $badgeData = ["assignedUser" => $assignedUser, "assigningUser" => $assigningUser, "title" => $title, "description" => $description, "iconId" => $iconId];
+
+        $badgeIsValid = badgeIsValid($badgeData);
+        if($badgeIsValid != null) { 
+            $errors[] = $badgeIsValid;
+        } else {
+            addBadgeToDatabase($badgeData);
+        }
+    } else {
+        $errors[] = "Invalid request";
+    }
+
+    if ($errors) {
+        $response = ["success" => false, "data" => $errors];
+    } else {
+        $response = ["success" => true];
+    }
+
+    echo json_encode($response);
 }
