@@ -36,7 +36,7 @@ class Database
     private function prepareStatements()
     {
         // users table statements
-        $sql = "INSERT INTO users(username, password, email, admin) VALUES (:user, :password, :email, :admin)";
+        $sql = "INSERT INTO users(username, password, email, admin, firstName, familyName, major, class) VALUES (:user, :password, :email, :admin, :firstName, :familyName, :major, :class)";
         $this->insertUserStatement = $this->connection->prepare($sql);
 
         $sql = "SELECT * FROM users WHERE username=:username AND password=:password AND admin=:admin";

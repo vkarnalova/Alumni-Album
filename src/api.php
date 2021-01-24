@@ -49,9 +49,13 @@ function registerUsers($filePath)
     if ($handle) {
         while (($line = fgets($handle)) !== false) {
             // process the line 
-            list($username, $email) = explode(',', $line);
+            list($username, $email, $firstName, $familyName, $major, $class) = explode(',', $line);
             $pass = generateRandomPassword();
-            $db->insertUserQuery(["user" => $username, "password" => $pass, "email" => $email, "admin" => false]);
+            $db->insertUserQuery([
+                "user" => $username, "password" => $pass,
+                "email" => $email, "admin" => false, "firstName" => $firstName,
+                "familyName" => $familyName, "major" => $major, "class" => $class
+            ]);
             mailPasswordToUser($username, $pass, $email);
         }
 
@@ -192,5 +196,5 @@ function mailPasswordToUser($username, $password, $email)
     $subject = "Alumni Album Account Password";
     $message = "Привет, " . "$username" . "! :)\n\nДобре дошли в Алумни Албум!\nПаролата за вашия потребителски профил е: " . "$password" . " .\nВинаги можете да я смените по-късно от настройките на профила.\n\nПоздрави\nЕкипа на Алумни Албум :)";
 
-    mail($email, $subject, $message);
+    //mail($email, $subject, $message);
 }

@@ -27,6 +27,15 @@ try {
             password VARCHAR(30) NOT NULL,
             email VARCHAR(30) NOT NULL,
             admin TINYINT(1) NOT NULL,
+            firstName VARCHAR(255) NOT NULL,
+            familyName VARCHAR(255) NOT NULL,
+            major VARCHAR(8) NOT NULL,
+            class int NOT NULL,
+            potok int,
+            groupNumber int,
+            phoneNumber VARCHAR(15),
+            address VARCHAR(255),
+            additionalInfo VARCHAR(255),
             PRIMARY KEY (username)
         )";
     $connection->exec($sql);
