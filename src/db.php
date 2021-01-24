@@ -9,6 +9,8 @@ class Database
     private $insertTagStatement;
     private $selectTagByTextStatement;
     private $insertTagForPhotoStatement;
+    private $selectBadgeStatement;
+    private $insertBadgeStatement;
 
     public function __construct()
     {
@@ -59,6 +61,13 @@ class Database
         // photo_tag table statements
         $sql = "INSERT INTO photo_tag(photoId, tagId) VALUES (:photoId, :tagId)";
         $this->insertTagForPhotoStatement = $this->connection->prepare($sql);
+
+        // badges table statements
+        $sql = "SELECT * FROM badges WHERE assignedUser=:assignedUser AND title=:=title";
+        $this->selectBadgeStatement = $this->connection->prepare($sql);
+
+        $sql = "INSERT INTO badges(assignedUser, assigningUser,	title, description, iconId) VALUES (:assignedUser, :assigningUser, :title, :description, :iconId)";
+        $this->insertBadgeStatement = $this->connection->prepare($sql);
     }
 
     public function insertUserQuery($data)
@@ -138,6 +147,20 @@ class Database
         try {
             // ["photoId" => "...", "tagId" => "..."]
             $this->insertTagForPhotoStatement->execute($data);
+
+            return ["success" => true];
+        } catch (PDOException $e) {
+            return ["success" => false, "error" => $e->getMessage()];
+        }
+    }
+
+    public function selectBadge($data) {
+        
+    }
+
+    public function insertBadge($data) {
+        try {
+            $this->insertBadgeStatement->execute($data);
 
             return ["success" => true];
         } catch (PDOException $e) {
