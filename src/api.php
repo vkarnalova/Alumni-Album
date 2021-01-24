@@ -137,7 +137,11 @@ function upload()
                 $errors[] = 'Failed to move uploaded file.';
             } else {
                 $tags = json_decode($_POST["tags"]);
-                addPhotoToDatabase($fileNameHash . '.' . $ext, $tags);
+
+                $addPhotoResult = addPhotoToDatabase($fileNameHash . '.' . $ext, $tags);
+                if (!$addPhotoResult["success"]) {
+                    $errors[] = $addPhotoResult["data"];
+                }
             }
         }
     } else {
