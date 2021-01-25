@@ -157,7 +157,7 @@ function getFiles($data, $db) {
     $sql = generateQuery($data);
     $query = $db->selectPhotoByInputQuery($sql);
     if ($query["success"]) {
-        $files = $query["data"]->fetch(PDO::FETCH_ASSOC);
+        $files = $query["data"]->fetchAll(PDO::FETCH_ASSOC);
         if ($files) {
             return ["success" => true, "data" => $files];
         } else {
@@ -168,31 +168,42 @@ function getFiles($data, $db) {
     }
 }
 
+function isEmptyString($var) {
+    return $var == "";
+}
+
+function isEmptyArray($data) {
+    return isEmptyString($data["major"]) && isEmptyString($data["class"]) && isEmptyString($data["potok"])  && isEmptyString($data["groupNumber"]) && isEmptyString($data["occasion"]) && isEmptyString($data["tags"]);
+}
 
 function generateQuery($data) {
     $sql = "";
-    if (!$data) {
+    if (isEmptyArray($data)) {
         return "SELECT name FROM photos";
-    } else if (!array_key_exists("tags", $data)) {
+    } else if (empty($data["tags"])) {
         $sql = "SELECT name FROM photos WHERE ";
     } else {
-        $sql = "SELECT DISTINCT name FROM photos p JOIN photo_tag pt ON p.id = :pt.photoId JOIN tags t ON pt.tagId = :t.id WHERE ";
+        $sql = "SELECT DISTINCT name FROM photos p JOIN photo_tag pt ON p.id=pt.photoId JOIN tags t ON pt.tagId=t.id WHERE ";
     }
 
     
     $first = True;
         
     foreach($data as $attribute => $value) {
-        if (is_array($value)) {
+        if (empty($value)) {
+            continue;
+        }
+        if ($attribute == "tags") {
             $first = True;
             $sql .= "(";
-            foreach($data["tags"] as $tag) {
+            $tags = array($data["tags"]);
+            for ($i = 0; $i < count($tags); $i++) {
                 if (!$first) {
                     $sql .= " OR ";
                 }
                 
                 $first = False;
-                $sql .= " t.text LIKE {$tag}";
+                $sql .= " t.text LIKE '{$tags[$i]}'";
             }
 
             $sql .= ")";
@@ -201,12 +212,13 @@ function generateQuery($data) {
             $sql .= " AND ";
         }
         
-        $sql .=  $attribute ." = :". $value;
+        $sql .=  $attribute ."='". $value . "'";
         $first = False;
     }
 
     
-
     return $sql;
     
 }
+
+

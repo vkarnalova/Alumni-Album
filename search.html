@@ -51,10 +51,14 @@
                                         <h3>Търси по</h3>
                                     </header>
 
-                                    <label for="major">
-                                        Специалност
-                                        <select id="major" name="major" id="major" placeholder="Специалност">
-                                            <option value=""></option>
+                                    
+                                    <label for="major">         
+                                                                      
+                                        Специалност           
+                                        
+                                                                   
+                                        <select id="major" name="major" id="major" disabled>
+                                            <option value="">Специалност</option>
                                             <option value="кн">Компютърни науки</option>                                            
                                             <option value="си">Софтуерно Инженерство</option>
                                             <option value="и">Информатика</option>                                            
@@ -64,56 +68,74 @@
                                             <option value="ми">Математика и инфроматика</option>
                                             <option value="с">Статистика</option>
                                         </select>
+                                        <input type="checkbox" id="majorCheck" name="majorCheck" value="major" class="checkbox">   
                                     </label>
+                                    
                                     
                                 
                                     <label for="class">
                                         Випуск
-                                        <input type="number" name="class" id="class" min="1900" max="2021" step="1" placeholder="Напр. &quot 2020 &quot" size=10>
+                                        <input type="number" name="class" id="class" min="1900" max="2021" step="1" placeholder="Напр. &quot 2020 &quot" size=10 disabled>
+                                        <input type="checkbox" id="classCheck" name="classCheck" value="class" class="checkbox"> 
                                     </label>
                                     
 
                                     <label for="potok">
                                         Поток
-                                        <input type="number" name="potok" id="potok" min="1" max="2" step="1" placeholder="Напр. &quot 1 &quot" size=10>
+                                        <input type="number" name="potok" id="potok" min="1" max="2" step="1" placeholder="Напр. &quot 1 &quot" size=10 disabled>
+                                        <input type="checkbox" id="potokCheck" name="potokCheck" value="potok" class="checkbox"> 
                                     </label>
                                     
 
                                     <label for="groupNumber">
                                         Група
-                                        <input type="number" name="groupNumber" id="groupNumber" min="1" max="8" step="1" placeholder="Напр. &quot 5 &quot" size=10>
+                                        <input type="number" name="groupNumber" id="groupNumber" min="1" max="8" step="1" placeholder="Напр. &quot 5 &quot" size=10 disabled>
+                                        <input type="checkbox" id="groupNumberCheck" name="groupNumberCheck" value="groupNumber" class="checkbox"> 
                                     </label>
                                     
 
                                     <label for="occasion">
                                         Събитие
-                                        <input type="text" name="occasion" id="occasion" placeholder="Напр. &quot Freshers &quot" size=10>
+                                        <input type="text" name="occasion" id="occasion" placeholder="Напр. &quot Freshers &quot" size=10 disabled>
+                                        <input type="checkbox" id="occasionCheck" name="ocassionCheck" value="occasion" class="checkbox"> 
                                     </label>
                                     
                                     <label for="tags">
                                         Тагове
-                                        <input type="text" name=tags placeholder="Напр. &quot якичко беше &quot" class="tag">
+                                        <input type="text" name="tags" id="tags" placeholder="Напр. &quot якичко беше &quot" class="tag" disabled>
+                                        <input type="checkbox" id="tagsCheck" name="tagsCheck" value="tags" class="checkbox"> 
                                         
                                     </label>    
                                     
-                                    <button id="addTagField" type="button">Добави още тагове</button>
+                                    <button id="addTagField" type="button" disabled>Добави още тагове</button>
 
                                     <label>
                                         <input type="submit" name="searchButton" id="searchButton" value="Търси">
                                     </label>
                                 </form>
 
+                                
+                            </section>
+                            <section class="photoSection">
+                                <header>
+                                    <h3></h3>
+                                </header>
                                 <section id="photos">
-                                    <header>
-                                        <h3>p</h3>
-                                    </header>
-
 
                                 </section>
-                            </section>
 
+                            </section>
                             
-										
+							<section id="popup" class="popup">
+
+                                
+                                <div class="popupContent">
+                                    <span class="close">&times;</span>
+                                    <img id="image">
+                                </div>
+                                
+                              
+                            </section>	
 						</section>
 					</main>
 				</div>

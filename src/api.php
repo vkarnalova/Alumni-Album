@@ -170,8 +170,14 @@ function upload()
 function search() {
     $errors = [];
     $response = [];
-    if ($_POST) {
-        $data = json_decode($_POST["data"], true);
+    if (isset($_POST)) {
+        $major = isset($_POST["major"]) ? $_POST["major"] : "";
+        $class = isset($_POST["class"]) ? $_POST["class"] : "";
+        $potok = isset($_POST["potok"]) ? $_POST["potok"] : "";
+        $groupNumber = isset($_POST["groupNumber"]) ? $_POST["groupNumber"] : "";
+        $occasion = isset($_POST["occasion"]) ? $_POST["occasion"] : "";
+        $tags = isset($_POST["tags"]) ? $_POST["tags"] : "";
+        $data = ["major" => $major, "class" => $class, "potok" => $potok, "groupNumber" => $groupNumber, "occasion" => $occasion, "tags" => $tags];
         $db = new Database();
         $files = getFiles($data, $db);
         
