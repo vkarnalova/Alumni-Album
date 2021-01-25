@@ -155,7 +155,13 @@ class Database
     }
 
     public function selectBadge($data) {
-        
+        try {
+            $this->selectBadgeStatement->execute($data);
+
+            return ["success" => true, "data" => $this->selectBadgeStatement];
+        } catch (PDOException $e) {
+            return ["success" => false, "error" => $e->getMessage()];
+        }
     }
 
     public function insertBadge($data) {
