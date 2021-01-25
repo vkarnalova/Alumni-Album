@@ -167,4 +167,15 @@ class Database
             return ["success" => false, "error" => $e->getMessage()];
         }
     }
+
+    public function selectPhotoByInputQuery($sql) {
+        $selectPhotoByInputStatement = $this->connection->prepare($sql);
+
+        try {
+            $selectPhotoByInputStatement->execute();
+            return ["success" => true, "data" => $selectPhotoByInputStatement];
+        } catch (PDOException $e) {
+            return ["success" => false, "error" => $e->getMessage()];
+        }
+    }
 }

@@ -13,7 +13,6 @@ if (preg_match("/register$/", $requestURL)) {
     login();
 } else if (preg_match("/upload$/", $requestURL)) {
     upload();
-<<<<<<< HEAD
 } else if (preg_match("/search$/", $requestURL)) {
     search(); 
 } else if (preg_match("/add-badge$/", $requestURL)) {
@@ -167,6 +166,34 @@ function upload()
 
     echo json_encode($response);
 }
+
+function search() {
+    $errors = [];
+    $response = [];
+    if ($_POST) {
+        $data = json_decode($_POST["data"], true);
+        $db = new Database();
+        $files = getFiles($data, $db);
+        
+        if ($files["success"]) {
+            $data = $files["data"];
+        } else {
+            $errors[] = $files["data"];
+        }
+        
+    } else {
+        $errors[] = "Invalid request";
+    }
+
+    if ($errors) {
+        $response = ["success" => false, "error" => $errors];
+    } else {
+        $response = ["success" => true, "data" => $data];
+    }
+
+    echo json_encode($response);
+}
+
 
 function isUserValid($username, $password, $admin)
 {

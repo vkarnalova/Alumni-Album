@@ -150,3 +150,63 @@ function addTag($tag, $db)
         return ["success" => false, "data" => $query];
     }
 }
+
+function getFiles($data, $db) {
+    
+    
+    $sql = generateQuery($data);
+    $query = $db->selectPhotoByInputQuery($sql);
+    if ($query["success"]) {
+        $files = $query["data"]->fetch(PDO::FETCH_ASSOC);
+        if ($files) {
+            return ["success" => true, "data" => $files];
+        } else {
+            return ["success" => false, "data" => 'No files matching'];
+        }
+    } else {
+        return ["success" => false, "data" => $query];
+    }
+}
+
+
+function generateQuery($data) {
+    $sql = "";
+    if (!$data) {
+        return "SELECT name FROM photos";
+    } else if (!array_key_exists("tags", $data)) {
+        $sql = "SELECT name FROM photos WHERE ";
+    } else {
+        $sql = "SELECT DISTINCT name FROM photos p JOIN photo_tag pt ON p.id = :pt.photoId JOIN tags t ON pt.tagId = :t.id WHERE ";
+    }
+
+    
+    $first = True;
+        
+    foreach($data as $attribute => $value) {
+        if (is_array($value)) {
+            $first = True;
+            $sql .= "(";
+            foreach($data["tags"] as $tag) {
+                if (!$first) {
+                    $sql .= " OR ";
+                }
+                
+                $first = False;
+                $sql .= " t.text LIKE {$tag}";
+            }
+
+            $sql .= ")";
+            break;
+        } else if (!$first) {
+            $sql .= " AND ";
+        }
+        
+        $sql .=  $attribute ." = :". $value;
+        $first = False;
+    }
+
+    
+
+    return $sql;
+    
+}
