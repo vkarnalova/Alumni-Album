@@ -23,7 +23,7 @@ function isEmpty($field) {
 }
 
 function isTooLong($field, $maxLength) {
-    return strlen($field) > $maxLength;
+    return mb_strlen($field) > $maxLength;
 }
 
 function addBadgeToDatabase($badgeData) {
