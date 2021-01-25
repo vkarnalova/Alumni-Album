@@ -271,7 +271,7 @@ function addBadge()
     }
 
     if ($errors) {
-        $response = ["success" => false, "data" => $errors];
+        $response = ["success" => false, "error" => $errors];
     } else {
         $response = ["success" => true];
     }
@@ -302,7 +302,7 @@ function showBadges()
     }
 
     if ($errors) {
-        $response = ["success" => false, "data" => $errors];
+        $response = ["success" => false, "error" => $errors];
     }
 
     echo json_encode($response);
