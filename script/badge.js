@@ -1,4 +1,4 @@
-﻿function addBadge() {
+function addBadge() {
     var assignedUser = location.href.substring(location.href.lastIndexOf('/') + 1); //в случай че адресът е от вида ../badge-assignment.html/profila-na-rosi
     var title = document.getElementById("badge_title").value;
     var description = document.getElementById("badge_description").value;
@@ -61,4 +61,29 @@ function getBadgeIcon() {
 			return badge_icon[i];
 		}
 	}
+}
+
+function displayBadges() {
+	var user = location.href.substring(location.href.lastIndexOf('/') + 1); //../profila-na-mimi
+	var data = new FormData();
+    data.append('user', user);
+
+    const settings = {
+		method: 'POST',
+        body: data
+    };
+
+    ajax('src/api.php/show-badges', settings, function (data) {
+		data.forEach(record => display(record));
+    }, function (error) {
+        alert(error);
+    },
+    );
+}
+
+function display(record) {
+	document.getElementById("badgesPanel").appendChild(document.createElement('img')).src = "badge_icons/" + record.iconId + ".png";
+	document.getElementById("badgesPanel").innerHTML += "<br>";
+	document.getElementById("badgesPanel").innerHTML += "Значка &quot;" +  record.title + "&quot; <br>";
+	document.getElementById("badgesPanel").innerHTML += "Възложена от "+ record.assigningUser + "<br>";
 }
