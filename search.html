@@ -1,0 +1,129 @@
+<!DOCTYPE HTML> 
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Търсене</title>	
+		<link rel="stylesheet" href="css/style.css" />
+        <link rel="stylesheet" href="css/search-style.css" />
+        <script defer src="script/ajax.js"></script>
+        <script defer src="script/search.js"></script>
+	</head>
+	
+	<body>
+		<section id="page">
+			<div id="headerWrapper">
+				<header>
+					<div class="container">
+						<div id="logo"> <!-- Logo -->
+							<h1 id="siteHeading"><a href="homepage.html">Алумни Албум</a></h1>
+						</div>
+					</div>
+					<div id="navWrapper">
+						<div class="container">
+							<nav id="siteNav">
+								<ul>
+                                    <li><a href="profile.html">Профил</a></li>
+                                    <li class="active"><a href="search.html">Търсене</a></li>
+									<li><a href="about.html">За екипа</a></li>
+									<li><a href="login.html">Изход</a></li>
+								</ul>
+
+								<input class="search" placeholder="Търсене на потребител" type="text"> 
+							</nav>
+						</div>
+					</div>
+				</header>
+			</div>
+	
+			<div id="mainWrapper">		
+	
+				<div class="container">
+					<main id="main">
+						<section>
+							<header>
+								<h2>Търсене</h2>
+							</header>
+	
+							<section id="filterSection">
+                                
+                                <form id="filterForm">
+                                    <header>
+                                        <h3>Търси по</h3>
+                                    </header>
+
+                                    <label for="major">
+                                        Специалност
+                                        <select id="major" name="major" id="major" placeholder="Специалност">
+                                            <option value=""></option>
+                                            <option value="кн">Компютърни науки</option>                                            
+                                            <option value="си">Софтуерно Инженерство</option>
+                                            <option value="и">Информатика</option>                                            
+                                            <option value="ис">Информационни системи</option>
+                                            <option value="м">Математика</option>
+                                            <option value="пм">Приложна математика</option>
+                                            <option value="ми">Математика и инфроматика</option>
+                                            <option value="с">Статистика</option>
+                                        </select>
+                                    </label>
+                                    
+                                
+                                    <label for="class">
+                                        Випуск
+                                        <input type="number" name="class" id="class" min="1900" max="2021" step="1" placeholder="Напр. &quot 2020 &quot" size=10>
+                                    </label>
+                                    
+
+                                    <label for="potok">
+                                        Поток
+                                        <input type="number" name="potok" id="potok" min="1" max="2" step="1" placeholder="Напр. &quot 1 &quot" size=10>
+                                    </label>
+                                    
+
+                                    <label for="groupNumber">
+                                        Група
+                                        <input type="number" name="groupNumber" id="groupNumber" min="1" max="8" step="1" placeholder="Напр. &quot 5 &quot" size=10>
+                                    </label>
+                                    
+
+                                    <label for="occasion">
+                                        Събитие
+                                        <input type="text" name="occasion" id="occasion" placeholder="Напр. &quot Freshers &quot" size=10>
+                                    </label>
+                                    
+                                    <label for="tags">
+                                        Тагове
+                                        <input type="text" name=tags placeholder="Напр. &quot якичко беше &quot" class="tag">
+                                        
+                                    </label>    
+                                    
+                                    <button id="addTagField" type="button">Добави още тагове</button>
+
+                                    <label>
+                                        <input type="submit" name="searchButton" id="searchButton" value="Търси">
+                                    </label>
+                                </form>
+
+                                <section id="photos">
+                                    <header>
+                                        <h3>p</h3>
+                                    </header>
+
+
+                                </section>
+                            </section>
+
+                            
+										
+						</section>
+					</main>
+				</div>
+			</div>
+			<footer id="footerInfo">
+				<div class="container">
+					СУ "Св. Климент Охридски" | ФМИ | Компютърни науки | Уеб технологии | 2020/2021
+				</div>
+			</footer>
+		</section>
+		
+	</body>
+</html>

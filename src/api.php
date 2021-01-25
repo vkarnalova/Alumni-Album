@@ -12,6 +12,8 @@ if (preg_match("/register$/", $requestURL)) {
     login();
 } else if (preg_match("/upload$/", $requestURL)) {
     upload();
+} else if (preg_match("/search$/", $requestURL)) {
+    search(); 
 } else {
     echo json_encode(["success" => false, "error" => "URL not found"]);
 }
@@ -189,7 +191,7 @@ function generateRandomPassword()
 
 function mailPasswordToUser($username, $password, $email)
 {
-    $subject = "Alumni Album Account Password";
+    $subject = "Парола за Алумни Албум";
     $message = "Привет, " . "$username" . "! :)\n\nДобре дошли в Алумни Албум!\nПаролата за вашия потребителски профил е: " . "$password" . " .\nВинаги можете да я смените по-късно от настройките на профила.\n\nПоздрави\nЕкипа на Алумни Албум :)";
 
     mail($email, $subject, $message);
