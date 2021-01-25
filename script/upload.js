@@ -63,8 +63,8 @@ function addInputTagField() {
     tagField.setAttribute("placeholder", "Tag");
     tagField.classList.add("tag");
 
-    document.getElementById("uploadImagesForm").insertBefore(tagField, document.getElementById("addTagField"));
-    document.getElementById("uploadImagesForm").insertBefore(document.createElement("br"), document.getElementById("addTagField"));
+    document.getElementById("uploadPhotosSection").insertBefore(tagField, document.getElementById("addTagField"));
+    document.getElementById("uploadPhotosSection").insertBefore(document.createElement("br"), document.getElementById("addTagField"));
 }
 
 function getPhotosAdditionalInfo() {

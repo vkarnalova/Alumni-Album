@@ -135,6 +135,14 @@ body {
 }
 
 /* main */
+
+h2, h3 {
+	background: -webkit-linear-gradient(#1d8ba3, #f0940b);
+  	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	font-weight: bold;
+}
+
 #mainWrapper {
 	background: url(images/main-wrapper.jpg) repeat;
 }

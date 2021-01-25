@@ -1,0 +1,55 @@
+input, select, button {
+	height: 30px;
+	margin: 5px;
+	width: 300px;
+	border: none;
+    border-bottom: 2px solid  #29b4d3;  
+    -webkit-transition: width 0.5s ease-in-out;
+    transition: width 0.5s ease-in-out;
+	outline: none;
+}
+
+input:disabled, select:disabled, button:disabled {
+	border-bottom: 2px solid  #666969;
+}
+
+button:disabled {
+	background-color: #e2e2e2;
+	color: black;
+}
+
+
+#uploadImagesForm {
+    display: flex;
+    
+}
+
+#uploadImagesForm section {
+    display: flex;
+    flex-direction: column;
+    margin-left: 50px;
+}
+input:focus, select:focus {
+    border-bottom: 2px solid  #1d8ba3; 
+}
+
+#uploadButton, button {
+    border: none;
+    border-radius: 10px;
+    color: white;
+	background-color: #29b4d3;
+	margin: 10px;
+}
+
+#uploadButton:hover, button:hover {
+	-moz-transition: color 0.35s ease-in-out, background-color 0.35s ease-in-out;
+	-webkit-transition: color 0.35s ease-in-out, background-color 0.35s ease-in-out;
+	-o-transition: color 0.35s ease-in-out, background-color 0.35s ease-in-out;
+	-ms-transition: color 0.35s ease-in-out, background-color 0.35s ease-in-out;
+	transition: color 0.35s ease-in-out, background-color 0.35s ease-in-out;
+	cursor: pointer;
+	background-color: #ebe0cc;
+	color: #29b4d3;
+	border: none;
+}
+
