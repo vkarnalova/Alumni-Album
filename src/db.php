@@ -67,7 +67,7 @@ class Database
         $this->insertTagForPhotoStatement = $this->connection->prepare($sql);
 
         // badges table statements
-        $sql = "SELECT * FROM badges WHERE assignedUser=:assignedUser AND title=:=title";
+        $sql = "SELECT * FROM badges WHERE assignedUser=:assignedUser";
         $this->selectBadgeStatement = $this->connection->prepare($sql);
 
         $sql = "INSERT INTO badges(assignedUser, assigningUser,	title, description, iconId) VALUES (:assignedUser, :assigningUser, :title, :description, :iconId)";
