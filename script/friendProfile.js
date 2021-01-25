@@ -1,4 +1,5 @@
 ﻿function main() {
+	displayProfileInformation();
 	displayBadges();
 
 	document.getElementById("assignBadgeButton").addEventListener("click", event => { 
@@ -24,6 +25,7 @@ function showBadgeSubmittionForm() {
 function hideSubmittionForm() {
 	document.getElementById("pageCover").style.display = "none";
 	document.getElementById("badgeFormSection").style.display = "none";
+	location.reload();
 }
 
 function cleanMessages() {

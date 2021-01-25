@@ -1,6 +1,6 @@
 function addBadge() {
     var assignedUser = location.href.substring(location.href.lastIndexOf('/') + 1); //в случай че адресът е от вида ../badge-assignment.html/profila-na-rosi
-    var title = document.getElementById("badge_title").value;
+	var title = document.getElementById("badge_title").value;
     var description = document.getElementById("badge_description").value;
 	var icon = getBadgeIcon();
 	var iconId;
@@ -73,17 +73,91 @@ function displayBadges() {
         body: data
     };
 
+	var allIcons = [];
+	var count = [0, 0];
     ajax('src/api.php/show-badges', settings, function (data) {
-		data.forEach(record => display(record));
+		data.forEach(record => display(record, allIcons, count));
     }, function (error) {
         alert(error);
     },
     );
 }
 
-function display(record) {
-	document.getElementById("badgesPanel").appendChild(document.createElement('img')).src = "badge_icons/" + record.iconId + ".png";
-	document.getElementById("badgesPanel").innerHTML += "<br>";
-	document.getElementById("badgesPanel").innerHTML += "Значка &quot;" +  record.title + "&quot; <br>";
-	document.getElementById("badgesPanel").innerHTML += "Възложена от "+ record.assigningUser + "<br>";
+function display(record, allIcons, count) {
+	var iconIsAlreadyDisplayed = false;
+	for(var i = 0; i < allIcons.length; i++) {
+		if(allIcons[i] == record.iconId) {
+			displayUnderAlreadyExistingIcon(record);
+			iconIsAlreadyDisplayed = true;
+			break;
+		}
+	}
+	
+	if(!iconIsAlreadyDisplayed) {
+		allIcons.push(record.iconId);
+		displayUnderNewlyCreatedIcon(record, count);
+	}
+
+
+}
+
+function displayUnderNewlyCreatedIcon(record, count) {
+	var elementId = 'badgesWithIcon' + record.iconId;
+	if(count[0] > 6 || (count[1] == 0 && count[0] == 0)) {
+		count[1]++;
+		var tr = document.createElement('tr');
+		tr.id = count[1];
+		var td = document.createElement('td');
+		img = document.createElement('img');
+		img.id = elementId;
+		td.appendChild(img).src = "images/badge_icons/" + record.iconId + ".png";
+		tr.appendChild(td);
+		document.getElementById("badgesTable").appendChild(tr);
+		
+		if(count[1] != 0) {
+			count[0] = 1;
+		} else {
+			count[0]++;
+		}
+	} else {
+		var td = document.createElement('td');
+		img = document.createElement('img');
+		img.id = elementId;
+		td.appendChild(img).src = "images/badge_icons/" + record.iconId + ".png";
+		document.getElementById(count[1]).appendChild(td);
+		count[0]++;
+	}
+
+	addEventListenerOnClick(elementId, record.iconId);
+	displayDetails(record);
+}
+
+function displayUnderAlreadyExistingIcon(record) {
+	displayDetails(record);
+}
+
+function displayDetails(record) { //да добавям ли описанието?
+	var elementId = 'badgesWithIcon' + record.iconId;
+	var li = document.createElement("li");
+	li.textContent = "\"" +  record.title + "\", ";
+	li.textContent += "възложена от "+ record.assigningUser;
+	document.getElementById(elementId).appendChild(li);
+}
+
+function showFullBadgeInformation(elementId) {
+	document.getElementById(elementId).display = "block";
+}
+
+function hideFullBadgeInformation(elementId) {
+	document.getElementById(elementId).display = "none";
+}
+
+function addEventListenerOnClick(elementId, iconId) {
+	document.getElementById(elementId).addEventListener("click", event => { 
+		event.preventDefault();
+		showInformationBox(iconId)});
+}
+
+function showInformationBox(iconId) {
+	
 }
