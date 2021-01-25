@@ -4,46 +4,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Качване</title>
-
+    <title>Качване на снимки</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/upload-style.css" />
     <script defer src="script/ajax.js"></script>
     <script defer src="script/upload.js"></script>
 </head>
 
 <body>
-    <div id="page">
-        <header>
-            <h1>Alumni Album</h1>
-            <h2>Upload photos</h2>
-        </header>
-        <form id="uploadImagesForm">
-            <input type="file" placeholder="Photo" id="photoInput" multiple><br>
-            <input type="text" placeholder="Tag" class="tag"><br>
-            <button id="addTagField" type="button">Add other tag</button><br>
-            <h4>Добави повече информация за хората на снимките</h4>
-            <p>Полетата със звезда (*) са задължителни</p>
-            <select name="major" id="major" placeholder="Специалност">
-                <option disabled selected value> -- Избери специалност -- </option>
-                <option value="кн">Компютърни науки</option>
-                <option value="си">Софтуерно инжинирество</option>
-                <option value="и">Информатика</option>
-                <option value="с">Информационни системи</option>
-                <option value="м">Математика</option>
-                <option value="пм">Приложна математика</option>
-                <option value="ми">Математика и информатика</option>
-                <option value="ст">Статистика</option>
-            </select><br>
-            <input type="number" min="1900" max="2021" step="1" placeholder="Випуск*" id="class"><br>
-            <input type="number" min="1" max="2" step="1" placeholder="Поток" id="potok"><br>
-            <input type="number" min="1" max="8" step="1" placeholder="Група" id="groupNumber"><br>
-            <input type="text" placeholder="Събитие" id="occasion"><br>
+    <section id="page">
+        <div id="headerWrapper">
+            <header>
+                <div class="container">
+                    <div id="logo">
+                        <!-- Logo -->
+                        <h1 id="siteHeading"><a href="homepage.html">Алумни Албум</a></h1>
+                    </div>
+                </div>
+                <div id="navWrapper">
+                    <div class="container">
+                        <nav id="siteNav">
+                            <ul>
+                                <li><a href="profile.html">Профил</a></li>
+                                <li><a href="search.html">Търсене</a></li>
+                                <li class="active"><a href="search.html">Качване</a></li>
+                                <li><a href="about.html">За екипа</a></li>
+                                <li><a href="login.html">Изход</a></li>
+                            </ul>
 
-            <input id=" loginButton" name="submit" type="submit" value="Upload"><br>
-        </form>
-        <div id="errors">
-
+                            <input class="search" placeholder="Търсене на потребител" type="text">
+                        </nav>
+                    </div>
+                </div>
+            </header>
         </div>
-    </div>
+
+        <div id="mainWrapper">
+
+            <div class="container">
+                <main id="main">
+                    <section>
+                        <header>
+                            <h2>Качване на снимки</h2>
+                        </header>
+
+                        <section id="uploadSection">
+                            <form id="uploadImagesForm">
+                                <section id="uploadPhotosSection">
+                                    <h3>Избери снимки</h3>
+                                    <input type="file" placeholder="Photo" id="photoInput" multiple>
+                                    <input type="text" placeholder="Tag" class="tag">
+                                    <button id="addTagField" type="button">Добави още тагове</button>
+                                </section>
+
+                                <section>
+                                    <h3>Добави повече информация за хората на снимките</h3>
+                                    <p>Полетата със звезда (*) са задължителни</p>
+                                    <select name="major" id="major" placeholder="Специалност">
+                                        <option disabled selected value> -- Избери специалност -- </option>
+                                        <option value="кн">Компютърни науки</option>
+                                        <option value="си">Софтуерно инжинирество</option>
+                                        <option value="и">Информатика</option>
+                                        <option value="с">Информационни системи</option>
+                                        <option value="м">Математика</option>
+                                        <option value="пм">Приложна математика</option>
+                                        <option value="ми">Математика и информатика</option>
+                                        <option value="с">Статистика</option>
+                                    </select>
+                                    <input type="number" min="1900" max="2021" step="1" placeholder="Випуск*"
+                                        id="class">
+                                    <input type="number" min="1" max="2" step="1" placeholder="Поток" id="potok">
+                                    <input type="number" min="1" max="8" step="1" placeholder="Група" id="groupNumber">
+                                    <input type="text" placeholder="Събитие" id="occasion">
+
+                                    <input id="uploadButton" name="submit" type="submit" value="Качи снимки">
+                                </section>
+                            </form>
+                            <section id="errors">
+
+                            </section>
+                        </section>
+                    </section>
+                </main>
+            </div>
+        </div>
+
+        <footer id="footerInfo">
+            <div class="container">
+                СУ "Св. Климент Охридски" | ФМИ | Компютърни науки | Уеб технологии | 2020/2021
+            </div>
+        </footer>
+
+
+    </section>
 </body>
 
 </html>
