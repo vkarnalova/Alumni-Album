@@ -1,0 +1,86 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>Профил</title>
+	<link rel="stylesheet" href="css/style.css" />
+	<script src="script/my_profile.js"> </script>
+	<script src="script/ajax.js"> </script>
+</head>
+
+<body>
+	<section id="page">
+		<div id="headerWrapper">
+			<header>
+				<div class="container">
+					<div id="logo">
+						<!-- Logo -->
+						<h1 id="siteHeading"><a href="homepage.html">Алумни Албум</a></h1>
+					</div>
+				</div>
+				<div id="navWrapper">
+					<div class="container">
+						<nav id="siteNav">
+							<ul>
+								<li class="active"><a href="profile_view.html">Профил</a></li>
+								<li><a href="about.html">За екипа</a></li>
+								<li><a href="login.html">Изход</a></li>
+							</ul>
+
+							<input class="search" placeholder="Търсене" type="text">
+						</nav>
+					</div>
+				</div>
+			</header>
+		</div>
+
+		<div id="mainWrapper">
+
+			<div class="container">
+				<main id="main">
+					<section id="badgeFormSection">
+						<header>
+							<h2>Профил</h2>
+						</header>
+
+						<section>
+							<svg width="300" height="320">
+								<!--това е правоъгълничето, където ще стои профилната снимка-->
+								<rect width="200" height="300"
+									style="fill:rgb(0,0,255);stroke-width:3;stroke:rgb(0,0,0)" />
+							</svg>
+							<ul id="info"></ul>
+							<p id="profile_description"> Тук се показват името на потребителя + значки:
+							<p>
+						</section>
+
+						<section>
+							<form id="changeInfoForm" style="display: none">
+								<input type="number" min="1" max="2" step="1" placeholder="Поток" id="potokForm"><br>
+								<input type="number" min="1" max="8" step="1" placeholder="Група"
+									id="groupNumberForm"><br>
+								<input type="text" id="phoneNumberForm" placeholder="Телефонен номер"><br>
+								<input type="text" id="addressForm" placeholder="Адрес"><br>
+								<input type="text" id="additionalInfoForm" placeholder="Допълнителна информация"><br>
+
+								<input id="changeInfoButton" type="submit" value="Запази">
+							</form>
+
+							<!--click this to display the form -->
+							<button id="changeInfo">Редактирай</button>
+						</section>
+					</section>
+				</main>
+			</div>
+		</div>
+		<footer id="footerInfo">
+			<div class="container">
+				СУ "Св. Климент Охридски" | ФМИ | Компютърни науки | Уеб технологии | 2020/2021
+			</div>
+		</footer>
+	</section>
+
+</body>
+
+</html>
