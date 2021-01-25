@@ -110,7 +110,7 @@ function displayUnderNewlyCreatedIcon(record, count) {
 		var td = document.createElement('td');
 		img = document.createElement('img');
 		img.id = elementId;
-		td.appendChild(img).src = "images/badge_icons/" + record.iconId + ".png";
+		td.appendChild(img).src = "badge_icons/" + record.iconId + ".png";
 		tr.appendChild(td);
 		document.getElementById("badgesTable").appendChild(tr);
 		
@@ -123,7 +123,7 @@ function displayUnderNewlyCreatedIcon(record, count) {
 		var td = document.createElement('td');
 		img = document.createElement('img');
 		img.id = elementId;
-		td.appendChild(img).src = "images/badge_icons/" + record.iconId + ".png";
+		td.appendChild(img).src = "badge_icons/" + record.iconId + ".png";
 		document.getElementById(count[1]).appendChild(td);
 		count[0]++;
 	}
