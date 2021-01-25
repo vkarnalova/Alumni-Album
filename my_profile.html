@@ -5,6 +5,7 @@
 	<meta charset="utf-8">
 	<title>Профил</title>
 	<link rel="stylesheet" href="css/style.css" />
+	<link rel="stylesheet" href="css/myProfile.css" />
 	<script src="script/my_profile.js"> </script>
 	<script src="script/ajax.js"> </script>
 </head>
@@ -45,11 +46,17 @@
 						</header>
 
 						<section>
-							<svg width="300" height="320">
-								<!--това е правоъгълничето, където ще стои профилната снимка-->
-								<rect width="200" height="300"
-									style="fill:rgb(0,0,255);stroke-width:3;stroke:rgb(0,0,0)" />
-							</svg>
+							<!-- Avatar -->
+							<img src="avatars/default.png" alt="Avatar not found" id="avatar"
+								onerror="this.onerror=null; this.src='avatars/default.png';" />
+
+							<div>
+								<input id="addAvatarInput" type="file" placeholder="Добави аватар" />
+								<!--This button should be hidden. We need this because we want to trigger the click event 
+									when a file is selected so that the user could select and upload a file with only one click-->
+								<button id="addAvatarButton" style="display: none"></button>
+							</div>
+
 							<ul id="info"></ul>
 							<p id="profile_description"> Тук се показват името на потребителя + значки:
 							<p>

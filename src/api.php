@@ -24,6 +24,8 @@ if (preg_match("/register$/", $requestURL)) {
     getMyUserPersonalInfo();
 } else if (preg_match("/update-user$/", $requestURL)) {
     updateUserPersonalInfo();
+} else if (preg_match("/avatar$/", $requestURL)) {
+    addAvatar();
 } else {
     echo json_encode(["success" => false, "error" => "URL not found"]);
 }
@@ -362,6 +364,35 @@ function updateUserPersonalInfo()
 
             if (!$query["success"]) {
                 $errors[] = $query;
+            }
+        } else {
+            $errors[] = "You are not logged in.";
+        }
+    } else {
+        $errors[] = "Invalid request";
+    }
+
+    if ($errors) {
+        $response = ["success" => false, "data" => $errors];
+    } else {
+        $response = ["success" => true];
+    }
+
+    echo json_encode($response);
+}
+
+function addAvatar()
+{
+    $errors = [];
+    $response = [];
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if ($_SESSION["username"]) {
+            $username = $_SESSION["username"];
+
+            $result = addAvatarForUser($username);
+            if (!$result['success']) {
+                $errors = $result['error'];
             }
         } else {
             $errors[] = "You are not logged in.";

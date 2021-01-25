@@ -9,6 +9,36 @@ window.onload = function () {
     document.getElementById("changeInfoForm").addEventListener("submit", event => {
         updateUserInformation();
     });
+
+    document.getElementById("addAvatarInput").addEventListener("change", function () {
+        // Click on the hidden upload button
+        var addAvatarButton = document.getElementById('addAvatarButton');
+        addAvatarButton.click();
+    });
+
+    document.getElementById("addAvatarButton").addEventListener("click", function () {
+        let photo = document.getElementById("addAvatarInput").files[0];
+        if (photo) {
+            addAvatar(photo);
+        }
+    });
+}
+
+function addAvatar(photo) {
+    var data = new FormData()
+    data.append('file', photo);
+
+    const settings = {
+        method: 'POST',
+        body: data
+    };
+
+    ajax('src/api.php/avatar', settings, function (data) {
+        window.location.href = 'my_profile.html';
+    }, function (error) {
+        alert(error);
+    },
+    );
 }
 
 function updateUserInformation() {
@@ -67,6 +97,7 @@ function displayPersonalInformation() {
     ajax('src/api.php/get-user', settings, function (data) {
         // display personal info on success
         displayData(data);
+        displayAvatar(data['username']);
     }, function (error) {
         alert(error);
     },
@@ -81,6 +112,10 @@ function displayData(data) {
             addListElement(keyRepresentation + ": " + value, key);
         }
     }
+}
+
+function displayAvatar(username) {
+    document.getElementById("avatar").src = "avatars/" + username + ".png"
 }
 
 function addListElement(info, id) {
