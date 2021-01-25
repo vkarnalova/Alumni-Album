@@ -29,12 +29,11 @@ textarea {
 	display: flex;
 }
 
-
 input:focus, textarea:focus {
     border-bottom: 2px solid  #1d8ba3; 
 }
 
-#submit_button {
+#submit_button, #backButton {
     border: none;
     border-radius: 10px;
     color: white;
@@ -42,7 +41,7 @@ input:focus, textarea:focus {
 	margin: 10px;
 }
 
-#submit_button:hover {
+#submit_button:hover, #backButton:hover {
 	-moz-transition: color 0.35s ease-in-out, background-color 0.35s ease-in-out;
 	-webkit-transition: color 0.35s ease-in-out, background-color 0.35s ease-in-out;
 	-o-transition: color 0.35s ease-in-out, background-color 0.35s ease-in-out;
@@ -53,8 +52,6 @@ input:focus, textarea:focus {
 	color: #29b4d3;
 	border: none;
 }
-
-
 
 form img {
 	width: 55px;
