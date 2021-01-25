@@ -1,6 +1,7 @@
 <?php
 require_once "utility.php";
 require_once "db.php";
+require_once "badge.php";
 
 header("Content-type: application/json");
 session_start();
@@ -12,8 +13,11 @@ if (preg_match("/register$/", $requestURL)) {
     login();
 } else if (preg_match("/upload$/", $requestURL)) {
     upload();
+<<<<<<< HEAD
 } else if (preg_match("/search$/", $requestURL)) {
     search(); 
+} else if (preg_match("/add-badge$/", $requestURL)) {
+	addBadge();
 } else {
     echo json_encode(["success" => false, "error" => "URL not found"]);
 }
@@ -51,9 +55,13 @@ function registerUsers($filePath)
     if ($handle) {
         while (($line = fgets($handle)) !== false) {
             // process the line 
-            list($username, $email) = explode(',', $line);
+            list($username, $email, $firstName, $familyName, $major, $class) = explode(',', $line);
             $pass = generateRandomPassword();
-            $db->insertUserQuery(["user" => $username, "password" => $pass, "email" => $email, "admin" => false]);
+            $db->insertUserQuery([
+                "user" => $username, "password" => $pass,
+                "email" => $email, "admin" => false, "firstName" => $firstName,
+                "familyName" => $familyName, "major" => $major, "class" => $class
+            ]);
             mailPasswordToUser($username, $pass, $email);
         }
 
@@ -194,5 +202,37 @@ function mailPasswordToUser($username, $password, $email)
     $subject = "Парола за Алумни Албум";
     $message = "Привет, " . "$username" . "! :)\n\nДобре дошли в Алумни Албум!\nПаролата за вашия потребителски профил е: " . "$password" . " .\nВинаги можете да я смените по-късно от настройките на профила.\n\nПоздрави\nЕкипа на Алумни Албум :)";
 
-    mail($email, $subject, $message);
+    //mail($email, $subject, $message);
+}
+
+function addBadge()
+{
+    $errors = [];
+    $response = [];
+
+    if (isset($_POST)) { 
+        $assignedUser = $_POST["assignedUser"];
+        $assigningUser = $_SESSION["username"];
+        $title = $_POST["title"];
+        $description = $_POST["description"];
+        $iconId = $_POST["iconId"];
+        $badgeData = ["assignedUser" => $assignedUser, "assigningUser" => $assigningUser, "title" => $title, "description" => $description, "iconId" => $iconId];
+
+        $badgeIsValid = badgeIsValid($badgeData);
+        if($badgeIsValid != null) { 
+            $errors[] = $badgeIsValid;
+        } else {
+            addBadgeToDatabase($badgeData);
+        }
+    } else {
+        $errors[] = "Invalid request";
+    }
+
+    if ($errors) {
+        $response = ["success" => false, "data" => $errors];
+    } else {
+        $response = ["success" => true];
+    }
+
+    echo json_encode($response);
 }
