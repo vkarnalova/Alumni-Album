@@ -1,14 +1,14 @@
 ﻿<!DOCTYPE HTML> 
 <html>
-
 	<head>
-	
 		<meta charset="utf-8">
-		<title>Добави значка</title>
-		<link rel="stylesheet" href="css/badge_icons_list.css">			
+		<title>Профил</title>
 		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="css/friendProfile.css" />
+		<link rel="stylesheet" href="css/badge_icons_list.css"/>
 		<script src="script/badge.js"> </script>
-		<script src="script/ajax.js"> </script>
+		<script src="script/friendProfile.js"> </script>	
+		<script src="script/ajax.js"> </script>	
 		
 	</head>
 	
@@ -25,15 +25,13 @@
 						<div class="container">
 							<nav id="siteNav">
 								<ul>
-									<li><a href="profile.html">Профил</a></li>
+									<li><a href="profile_view.html">Профил</a></li>
 									<li><a href="about.html">За екипа</a></li>
 									<li><a href="login.html">Изход</a></li>
 								</ul>
 
 								<input class="search" placeholder="Търсене" type="text"> 
 							</nav>
-
-							
 						</div>
 					</div>
 				</header>
@@ -43,13 +41,33 @@
 	
 				<div class="container">
 					<main id="main">
-						<section id="badgeFormSection">
+						<section id="profileInformation">
 							<header>
-								<h2>Добавете значка</h2>
+								<h2>Профил</h2>
 							</header>
 	
-							<form id="badge_form"> 
+							<section>
+								<svg width="300" height="320"> <!--това е правоъгълничето, където ще стои профилната снимка-->
+									<rect width="200" height="300" style="fill:rgb(0,0,255);stroke-width:3;stroke:rgb(0,0,0)" />
+								</svg>
+								<p id="profile_description"> Тук се показват името на потребителя + значки: <p> 
+								<input type="submit" id="assignBadgeButton" value="Добави значка!"> <!--примерно ги подреждам в момента; да се разместят-->
+							</section>
 
+							<section id="badgesPanel">
+								
+							</section>
+						</section>
+
+						<section id="pageCover"> <!--да си унифицираме именуването-->
+							
+							<section id="badgeFormSection">
+								<header id="badgeSubmitionFormTitle">
+									<h2>Добавете значка</h2>
+									<p id="badgeSubmitionMessage"> </p>
+								</header>	
+
+								<form id="badge_form"> 
 								<section id="badgeSection">
 									<label class="badgeLabel" for="badge_title"> Заглавие на значката </label>
 									<input type="text" id="badge_title" placeholder="Напр. &quotОтличник на випуска&quot" size=40> 								
@@ -61,6 +79,9 @@
 
 									<label>
 										<input type="submit" id="submit_button" value="Добави!">
+									</label>
+									<label>
+										<input type="submit" id="backButton" value="Обратно в профила!">
 									</label>
 								</section>
 								
@@ -180,12 +201,13 @@
 										</tr>
 									</table>
 								</section>
+							
 								
-								
-							</form>
-										
-										
+								</form>
+							</section>
 						</section>
+						
+						
 					</main>
 				</div>
 			</div>
@@ -195,8 +217,6 @@
 				</div>
 			</footer>
 		</section>
-
 		
 	</body>
-	
 </html>

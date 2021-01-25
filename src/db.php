@@ -4,6 +4,7 @@ class Database
     private $connection;
     private $insertUserStatement;
     private $selectUserStatement;
+    private $selectUserByUsernameStatement;
     private $insertPhotoStatement;
     private $selectPhotoByNameStatement;
     private $insertTagStatement;
@@ -44,6 +45,9 @@ class Database
         $sql = "SELECT * FROM users WHERE username=:username AND password=:password AND admin=:admin";
         $this->selectUserStatement = $this->connection->prepare($sql);
 
+        $sql = "SELECT * FROM users WHERE username=:username";
+        $this->selectUserByUsernameStatement = $this->connection->prepare($sql);
+
         // photos table statements
         $sql = "INSERT INTO photos(name, major, class, potok, groupNumber, occasion) VALUES (:name, :major, :class, :potok, :groupNumber, :occasion)";
         $this->insertPhotoStatement = $this->connection->prepare($sql);
@@ -63,7 +67,7 @@ class Database
         $this->insertTagForPhotoStatement = $this->connection->prepare($sql);
 
         // badges table statements
-        $sql = "SELECT * FROM badges WHERE assignedUser=:assignedUser AND title=:=title";
+        $sql = "SELECT * FROM badges WHERE assignedUser=:assignedUser";
         $this->selectBadgeStatement = $this->connection->prepare($sql);
 
         $sql = "INSERT INTO badges(assignedUser, assigningUser,	title, description, iconId) VALUES (:assignedUser, :assigningUser, :title, :description, :iconId)";
@@ -85,10 +89,34 @@ class Database
     public function selectUserQuery($data)
     {
         try {
-            // ["user" => "..."]
+            // ["username" => "...", "password" => "...", "admin" => "..."]
             $this->selectUserStatement->execute($data);
 
             return ["success" => true, "data" => $this->selectUserStatement];
+        } catch (PDOException $e) {
+            return ["success" => false, "error" => $e->getMessage()];
+        }
+    }
+
+    public function selectUserByUsernameQuery($data)
+    {
+        try {
+            // ["username" => "..."]
+            $this->selectUserByUsernameStatement->execute($data);
+
+            return ["success" => true, "data" => $this->selectUserByUsernameStatement];
+        } catch (PDOException $e) {
+            return ["success" => false, "error" => $e->getMessage()];
+        }
+    }
+
+    public function updateUserInfoQuery($sql)
+    {
+        try {
+            $updateUserInfoStatement = $this->connection->prepare($sql);
+            $updateUserInfoStatement->execute();
+
+            return ["success" => true, "data" => $updateUserInfoStatement];
         } catch (PDOException $e) {
             return ["success" => false, "error" => $e->getMessage()];
         }
@@ -154,11 +182,19 @@ class Database
         }
     }
 
-    public function selectBadge($data) {
-        
+    public function selectBadge($data)
+    {
+        try {
+            $this->selectBadgeStatement->execute($data);
+
+            return ["success" => true, "data" => $this->selectBadgeStatement];
+        } catch (PDOException $e) {
+            return ["success" => false, "error" => $e->getMessage()];
+        }
     }
 
-    public function insertBadge($data) {
+    public function insertBadge($data)
+    {
         try {
             $this->insertBadgeStatement->execute($data);
 
@@ -168,7 +204,8 @@ class Database
         }
     }
 
-    public function selectPhotoByInputQuery($sql) {
+    public function selectPhotoByInputQuery($sql)
+    {
         $selectPhotoByInputStatement = $this->connection->prepare($sql);
 
         try {

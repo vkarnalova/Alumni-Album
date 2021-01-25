@@ -2,6 +2,7 @@
 require_once "utility.php";
 require_once "db.php";
 require_once "badge.php";
+require_once "user.php";
 
 header("Content-type: application/json");
 session_start();
@@ -14,9 +15,15 @@ if (preg_match("/register$/", $requestURL)) {
 } else if (preg_match("/upload$/", $requestURL)) {
     upload();
 } else if (preg_match("/search$/", $requestURL)) {
-    search(); 
+    search();
 } else if (preg_match("/add-badge$/", $requestURL)) {
-	addBadge();
+    addBadge();
+} else if (preg_match("/show-badges$/", $requestURL)) {
+    showBadges();
+} else if (preg_match("/get-user$/", $requestURL)) {
+    getMyUserPersonalInfo();
+} else if (preg_match("/update-user$/", $requestURL)) {
+    updateUserPersonalInfo();
 } else {
     echo json_encode(["success" => false, "error" => "URL not found"]);
 }
@@ -167,7 +174,8 @@ function upload()
     echo json_encode($response);
 }
 
-function search() {
+function search()
+{
     $errors = [];
     $response = [];
     if (isset($_POST)) {
@@ -180,13 +188,12 @@ function search() {
         $data = ["major" => $major, "class" => $class, "potok" => $potok, "groupNumber" => $groupNumber, "occasion" => $occasion, "tags" => $tags];
         $db = new Database();
         $files = getFiles($data, $db);
-        
+
         if ($files["success"]) {
             $data = $files["data"];
         } else {
             $errors[] = $files["data"];
         }
-        
     } else {
         $errors[] = "Invalid request";
     }
@@ -243,7 +250,7 @@ function addBadge()
     $errors = [];
     $response = [];
 
-    if (isset($_POST)) { 
+    if (isset($_POST)) {
         $assignedUser = $_POST["assignedUser"];
         $assigningUser = $_SESSION["username"];
         $title = $_POST["title"];
@@ -252,10 +259,112 @@ function addBadge()
         $badgeData = ["assignedUser" => $assignedUser, "assigningUser" => $assigningUser, "title" => $title, "description" => $description, "iconId" => $iconId];
 
         $badgeIsValid = badgeIsValid($badgeData);
-        if($badgeIsValid != null) { 
+        if ($badgeIsValid != null) {
             $errors[] = $badgeIsValid;
         } else {
             addBadgeToDatabase($badgeData);
+        }
+    } else {
+        $errors[] = "Invalid request";
+    }
+
+    if ($errors) {
+        $response = ["success" => false, "data" => $errors];
+    } else {
+        $response = ["success" => true];
+    }
+
+    echo json_encode($response);
+}
+
+function showBadges()
+{
+    $errors = [];
+    $response = [];
+
+    if (isset($_POST)) {
+        $user = $_POST["user"];
+
+        $db = new Database();
+        $query = $db->selectBadge(["assignedUser" => $user]);
+
+        $listOfBadges = $query["data"]->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($query["success"]) {
+            $response = ["success" => true, "data" => $listOfBadges];
+        } else {
+            $response = ["success" => false];
+        }
+    } else {
+        $errors[] = "Invalid request";
+    }
+
+    if ($errors) {
+        $response = ["success" => false, "data" => $errors];
+    }
+
+    echo json_encode($response);
+}
+
+function getMyUserPersonalInfo()
+{
+    $errors = [];
+    $response = [];
+
+    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+        if ($_SESSION["username"]) {
+            $username = $_SESSION["username"];
+            $db = new Database();
+            $query = $db->selectUserByUsernameQuery(["username" => $username]);
+
+            if ($query["success"]) {
+                $user = $query["data"]->fetch(PDO::FETCH_ASSOC);
+                if ($user) {
+                    // Do not send password info
+                    unset($user['password']);
+                } else {
+                    $errors = 'Invalid user';
+                }
+            } else {
+                $errors[] = $query;
+            }
+        } else {
+            $errors[] = "You are not logged in.";
+        }
+    } else {
+        $errors[] = "Invalid request";
+    }
+
+    if ($errors) {
+        $response = ["success" => false, "data" => $errors];
+    } else {
+        $response = ["success" => true, "data" => $user];
+    }
+
+    echo json_encode($response);
+}
+
+function updateUserPersonalInfo()
+{
+    $errors = [];
+    $response = [];
+
+    if ($_POST) {
+        if ($_SESSION["username"]) {
+            $username = $_SESSION["username"];
+
+            $data = json_decode($_POST["data"], true);
+            $query = updateUserInfo([
+                "username" => $username, "potok" => $data["potok"],
+                "groupNumber" => $data["groupNumber"], "phoneNumber" => $data["phoneNumber"],
+                "address" => $data["address"], "additionalInfo" => $data["additionalInfo"]
+            ]);
+
+            if (!$query["success"]) {
+                $errors[] = $query;
+            }
+        } else {
+            $errors[] = "You are not logged in.";
         }
     } else {
         $errors[] = "Invalid request";

@@ -78,10 +78,11 @@ try {
 		iconId int NOT NULL,
 		PRIMARY KEY (assignedUser, assigningUser, title)
 	)";
-	$connection->exec($sql);
+    $connection->exec($sql);
 
     // Add admin
-    $sql = "INSERT INTO users(username, password, email, admin) VALUES ('admin', 'admin', 'non-existent@gmail.com', 1)";
+    $sql = "INSERT INTO users(username, password, email, admin, firstName, familyName, major, class) VALUES 
+        ('admin', 'admin', 'non-existent@gmail.com', 1, 'Admin', 'Adminov', 'ad', 1992)";
     $connection->exec($sql);
 } catch (PDOException $error) {
     echo $error->getMessage();
