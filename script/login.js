@@ -29,7 +29,7 @@ function login() {
 
 
     ajax('src/api.php/login', settings, function (data) {
-        window.location.href = 'my_profile.html';
+        window.location.href = 'myProfile.html';
     }, function (error) {
         alert(error);
     },

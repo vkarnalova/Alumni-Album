@@ -1,152 +1,166 @@
-<!DOCTYPE HTML> 
+<!DOCTYPE HTML>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title>Търсене</title>	
-		<link rel="stylesheet" href="css/style.css" />
-        <link rel="stylesheet" href="css/search-style.css" />
-        <script defer src="script/ajax.js"></script>
-        <script defer src="script/search.js"></script>
-	</head>
-	
-	<body>
-		<section id="page">
-			<div id="headerWrapper">
-				<header>
-					<div class="container">
-						<div id="logo"> <!-- Logo -->
-							<h1 id="siteHeading"><a href="homepage.html">Алумни Албум</a></h1>
-						</div>
-					</div>
-					<div id="navWrapper">
-						<div class="container">
-							<nav id="siteNav">
-								<ul>
-                                    <li><a href="my_profile.html">Профил</a></li>
-                                    <li class="active"><a href="search.html">Търсене</a></li>
-									<li><a href="upload.html">Качване</a></li>
-                                    <li><a href="about.html">За екипа</a></li>
-									<li><a href="login.html">Изход</a></li>
-								</ul>
 
-								<input class="search" placeholder="Търсене на потребител" type="text"> 
-							</nav>
-						</div>
-					</div>
-				</header>
-			</div>
-	
-			<div id="mainWrapper">		
-	
-				<div class="container">
-					<main id="main">
-						<section>
-							<header>
-								<h2>Търсене на снимки</h2>
-							</header>
-	
-							<section id="filterSection">
-                                
-                                <form id="filterForm">
-                                    <header>
-                                        <h3>Търси по</h3>
-                                    </header>
+<head>
+    <meta charset="utf-8">
+    <title>Търсене</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/search-style.css" />
+    <script defer src="script/ajax.js"></script>
+    <script defer src="script/search.js"></script>
+</head>
 
-                                    
-                                    <label for="major">         
-                                                                      
-                                        Специалност           
-                                        
-                                                                   
-                                        <select id="major" name="major" id="major" disabled>
-                                            <option value="">Специалност</option>
-                                            <option value="кн">Компютърни науки</option>                                            
-                                            <option value="си">Софтуерно Инженерство</option>
-                                            <option value="и">Информатика</option>                                            
-                                            <option value="ис">Информационни системи</option>
-                                            <option value="м">Математика</option>
-                                            <option value="пм">Приложна математика</option>
-                                            <option value="ми">Математика и инфроматика</option>
-                                            <option value="с">Статистика</option>
-                                        </select>
-                                        <input type="checkbox" id="majorCheck" name="majorCheck" value="major" class="checkbox">   
-                                    </label>
-                                    
-                                    
-                                
-                                    <label for="class">
-                                        Випуск
-                                        <input type="number" name="class" id="class" min="1900" max="2021" step="1" placeholder="Напр. &quot 2020 &quot" size=10 disabled>
-                                        <input type="checkbox" id="classCheck" name="classCheck" value="class" class="checkbox"> 
-                                    </label>
-                                    
+<body>
+    <section id="page">
+        <div id="headerWrapper">
+            <header>
+                <div class="container">
+                    <div id="logo">
+                        <!-- Logo -->
+                        <h1 id="siteHeading"><a href="homepage.html">Алумни Албум</a></h1>
+                    </div>
+                </div>
+                <div id="navWrapper">
+                    <div class="container">
+                        <nav id="siteNav">
+                            <ul>
+                                <li><a href="myProfile.html">Профил</a></li>
+                                <li class="active"><a href="search.html">Търсене</a></li>
+                                <li><a href="upload.html">Качване</a></li>
+                                <li><a href="about.html">За екипа</a></li>
+                                <li><a href="login.html">Изход</a></li>
+                            </ul>
 
-                                    <label for="potok">
-                                        Поток
-                                        <input type="number" name="potok" id="potok" min="1" max="2" step="1" placeholder="Напр. &quot 1 &quot" size=10 disabled>
-                                        <input type="checkbox" id="potokCheck" name="potokCheck" value="potok" class="checkbox"> 
-                                    </label>
-                                    
+                            <input class="search" placeholder="Търсене на потребител" type="text">
+                        </nav>
+                    </div>
+                </div>
+            </header>
+        </div>
 
-                                    <label for="groupNumber">
-                                        Група
-                                        <input type="number" name="groupNumber" id="groupNumber" min="1" max="8" step="1" placeholder="Напр. &quot 5 &quot" size=10 disabled>
-                                        <input type="checkbox" id="groupNumberCheck" name="groupNumberCheck" value="groupNumber" class="checkbox"> 
-                                    </label>
-                                    
+        <div id="mainWrapper">
 
-                                    <label for="occasion">
-                                        Събитие
-                                        <input type="text" name="occasion" id="occasion" placeholder="Напр. &quot Freshers &quot" size=10 disabled>
-                                        <input type="checkbox" id="occasionCheck" name="ocassionCheck" value="occasion" class="checkbox"> 
-                                    </label>
-                                    
-                                    <label for="tags">
-                                        Тагове
-                                        <input type="text" name="tags" id="tags" placeholder="Напр. &quot якичко беше &quot" class="tag" disabled>
-                                        <input type="checkbox" id="tagsCheck" name="tagsCheck" value="tags" class="checkbox"> 
-                                        
-                                    </label>    
-                                    
-                                    <button id="addTagField" type="button" disabled>Добави още тагове</button>
+            <div class="container">
+                <main id="main">
+                    <section>
+                        <header>
+                            <h2>Търсене на снимки</h2>
+                        </header>
 
-                                    <label>
-                                        <input type="submit" name="searchButton" id="searchButton" value="Търси">
-                                    </label>
-                                </form>
+                        <section id="filterSection">
 
-                                
-                            </section>
-                            <section class="photoSection">
+                            <form id="filterForm">
                                 <header>
-                                    <h3></h3>
+                                    <h3>Търси по</h3>
                                 </header>
-                                <section id="photos">
 
-                                </section>
+
+                                <label for="major">
+
+                                    Специалност
+
+
+                                    <select id="major" name="major" id="major" disabled>
+                                        <option value="">Специалност</option>
+                                        <option value="кн">Компютърни науки</option>
+                                        <option value="си">Софтуерно Инженерство</option>
+                                        <option value="и">Информатика</option>
+                                        <option value="ис">Информационни системи</option>
+                                        <option value="м">Математика</option>
+                                        <option value="пм">Приложна математика</option>
+                                        <option value="ми">Математика и инфроматика</option>
+                                        <option value="с">Статистика</option>
+                                    </select>
+                                    <input type="checkbox" id="majorCheck" name="majorCheck" value="major"
+                                        class="checkbox">
+                                </label>
+
+
+
+                                <label for="class">
+                                    Випуск
+                                    <input type="number" name="class" id="class" min="1900" max="2021" step="1"
+                                        placeholder="Напр. &quot 2020 &quot" size=10 disabled>
+                                    <input type="checkbox" id="classCheck" name="classCheck" value="class"
+                                        class="checkbox">
+                                </label>
+
+
+                                <label for="potok">
+                                    Поток
+                                    <input type="number" name="potok" id="potok" min="1" max="2" step="1"
+                                        placeholder="Напр. &quot 1 &quot" size=10 disabled>
+                                    <input type="checkbox" id="potokCheck" name="potokCheck" value="potok"
+                                        class="checkbox">
+                                </label>
+
+
+                                <label for="groupNumber">
+                                    Група
+                                    <input type="number" name="groupNumber" id="groupNumber" min="1" max="8" step="1"
+                                        placeholder="Напр. &quot 5 &quot" size=10 disabled>
+                                    <input type="checkbox" id="groupNumberCheck" name="groupNumberCheck"
+                                        value="groupNumber" class="checkbox">
+                                </label>
+
+
+                                <label for="occasion">
+                                    Събитие
+                                    <input type="text" name="occasion" id="occasion"
+                                        placeholder="Напр. &quot Freshers &quot" size=10 disabled>
+                                    <input type="checkbox" id="occasionCheck" name="ocassionCheck" value="occasion"
+                                        class="checkbox">
+                                </label>
+
+                                <label for="tags">
+                                    Тагове
+                                    <input type="text" name="tags" id="tags" placeholder="Напр. &quot якичко беше &quot"
+                                        class="tag" disabled>
+                                    <input type="checkbox" id="tagsCheck" name="tagsCheck" value="tags"
+                                        class="checkbox">
+
+                                </label>
+
+                                <button id="addTagField" type="button" disabled>Добави още тагове</button>
+
+                                <label>
+                                    <input type="submit" name="searchButton" id="searchButton" value="Търси">
+                                </label>
+                            </form>
+
+
+                        </section>
+                        <section class="photoSection">
+                            <header>
+                                <h3></h3>
+                            </header>
+                            <section id="photos">
 
                             </section>
-                            
-							<section id="popup" class="popup">
 
-                                
-                                <div class="popupContent">
-                                    <span class="close">&times;</span>
-                                    <img id="image">
-                                </div>
-                                
-                              
-                            </section>	
-						</section>
-					</main>
-				</div>
-			</div>
-			<footer id="footerInfo">
-				<div class="container">
-					СУ "Св. Климент Охридски" | ФМИ | Компютърни науки | Уеб технологии | 2020/2021
-				</div>
-			</footer>
-		</section>
-		
-	</body>
+                        </section>
+
+                        <section id="popup" class="popup">
+
+
+                            <div class="popupContent">
+                                <span class="close">&times;</span>
+                                <img id="image">
+                            </div>
+
+
+                        </section>
+                    </section>
+                </main>
+            </div>
+        </div>
+        <footer id="footerInfo">
+            <div class="container">
+                СУ "Св. Климент Охридски" | ФМИ | Компютърни науки | Уеб технологии | 2020/2021
+            </div>
+        </footer>
+    </section>
+
+</body>
+
 </html>

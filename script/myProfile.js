@@ -34,7 +34,7 @@ function addAvatar(photo) {
     };
 
     ajax('src/api.php/avatar', settings, function (data) {
-        window.location.href = 'my_profile.html';
+        window.location.href = 'myProfile.html';
     }, function (error) {
         alert(error);
     },
@@ -73,7 +73,7 @@ function updateUserInformation() {
 
 
     ajax('src/api.php/update-user', settings, function (data) {
-        window.location.href = 'my_profile.html';
+        window.location.href = 'myProfile.html';
     }, function (error) {
         alert(error);
     },
