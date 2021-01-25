@@ -17,6 +17,8 @@ if (preg_match("/register$/", $requestURL)) {
     search(); 
 } else if (preg_match("/add-badge$/", $requestURL)) {
 	addBadge();
+} else if (preg_match("/show-badges$/", $requestURL)) {
+    showBadges();
 } else {
     echo json_encode(["success" => false, "error" => "URL not found"]);
 }
@@ -259,6 +261,34 @@ function addBadge()
         $response = ["success" => false, "data" => $errors];
     } else {
         $response = ["success" => true];
+    }
+
+    echo json_encode($response);
+}
+
+function showBadges() {
+    $errors = [];
+    $response = [];
+
+    if (isset($_POST)) { 
+        $user = $_POST["user"];
+
+        $db = new Database();
+        $query = $db->selectBadge(["assignedUser" => $user]);
+
+        $listOfBadges = $query["data"]->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($query["success"]) {
+            $response = ["success" => true, "data" => $listOfBadges];
+        } else {
+            $response = ["success" => false];
+        }
+    } else {
+        $errors[] = "Invalid request";
+    }
+
+    if ($errors) {
+        $response = ["success" => false, "data" => $errors];
     }
 
     echo json_encode($response);
