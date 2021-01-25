@@ -45,49 +45,46 @@
 
 			<div class="container">
 				<main id="main">
-					<section id="profileInformation">
-						<header>
-							<h2>Профил</h2>
-						</header>
-
-						<section>
-							<svg width="300" height="320">
-								<!--това е правоъгълничето, където ще стои профилната снимка-->
-								<rect width="200" height="300"
-									style="fill:rgb(0,0,255);stroke-width:3;stroke:rgb(0,0,0)" />
-							</svg>
-							<p id="profile_description"> Тук се показват името на потребителя + значки:
-							<p>
+						<section id="profileInformation">
+							
+							<section id="badgesPanel">
+								<img id="profilePicture"> </img> 
+								<table id = "badgesTable">
+									
+								</table>
+							</section>
+							
+							
+							<section id="infoDetails">
+								<p id="fullName"> </p>
+								<p id="major"> </p>
+								<p id="class"> </p>
+								<p id="potok">Поток: </p>
+								<p id="groupNumber">Факултативна група: </p> <!--да групирам тези допълнителните за инфо-->
+								<p id="phoneNumber">Телефонен номер: </p>
+								<p id="address">Адрес: </p>
+								<p id="additionalInfo">Допълнителна информация: </p>
 								<input type="submit" id="assignBadgeButton" value="Добави значка!">
-								<!--примерно ги подреждам в момента; да се разместят-->
-						</section>
-
-						<section id="badgesPanel">
+							</section>
 
 						</section>
-					</section>
 
-					<section id="pageCover">
-						<!--да си унифицираме именуването-->
+						<section id="pageCover"> <!--да си унифицираме именуването-->
+							
+							<section id="badgeFormSection">
+								<header id="badgeSubmitionFormTitle">
+									<h2>Добавете значка</h2>
+									<p id="badgeSubmitionMessage"> </p>
+								</header>	
 
-						<section id="badgeFormSection">
-							<header id="badgeSubmitionFormTitle">
-								<h2>Добавете значка</h2>
-								<p id="badgeSubmitionMessage"> </p>
-							</header>
-
-							<form id="badge_form">
+								<form id="badge_form"> 
 								<section id="badgeSection">
 									<label class="badgeLabel" for="badge_title"> Заглавие на значката </label>
-									<input type="text" id="badge_title"
-										placeholder="Напр. &quotОтличник на випуска&quot" size=40>
-
+									<input type="text" id="badge_title" placeholder="Напр. &quotОтличник на випуска&quot" size=40> 								
+								
 									<p class="badgeDescriptionContainer">
-										<label class="badgeLabel" for="badge_description"> Кратко описание </label>
-										<!--може да направим описанието да се показва като се hover-ва върху самата значка-->
-										<textarea name="badge_description" type="text" id="badge_description"
-											placeholder="Напр. &quotЗа особени изяви в учебния процес&quot"
-											size=200></textarea>
+										<label class="badgeLabel" for="badge_description"> Кратко описание </label> <!--може да направим описанието да се показва като се hover-ва върху самата значка-->
+										<textarea name="badge_description" type="text" id="badge_description" placeholder="Напр. &quotЗа особени изяви в учебния процес&quot" size = 200></textarea>
 									</p>
 
 									<label>
@@ -97,131 +94,132 @@
 										<input type="submit" id="backButton" value="Обратно в профила!">
 									</label>
 								</section>
-
+								
 								<section id="iconTable">
 									<header>Изберете изображение на значката</header>
 									<table class="icons">
 										<tr>
-											<td>
-												<label>
-													<input type="radio" name="icon" id="1">
-													<img src="badge_icons\1.png">
-												</label>
-											<td>
-												<label>
-													<input type="radio" name='icon' id="2">
-													<img src="badge_icons\2.png">
-												</label>
-											<td>
-												<label>
-													<input type="radio" name='icon' id="3">
-													<img src="badge_icons\3.png">
-												</label>
-											<td>
-												<label>
-													<input type="radio" name='icon' id="4">
-													<img src="badge_icons\4.png">
-												</label>
-											<td>
-												<label>
-													<input type="radio" name='icon' id="5">
-													<img src="badge_icons\5.png">
-												</label>
+											<td> 
+												<label> 
+													<input type="radio" name="icon" id="1"> 
+													<img src="images/badge_icons/1.png">
+												</label> 
+											<td> 
+												<label> 
+													<input type="radio" name='icon' id="2"> 
+													<img src="images/badge_icons/2.png">
+												</label> 
+											<td> 
+												<label> 
+													<input type="radio" name='icon' id="3"> 
+													<img src="images/badge_icons/3.png">
+												</label> 
+											<td> 
+												<label> 
+													<input type="radio" name='icon' id="4"> 
+													<img src="images/badge_icons/4.png">
+												</label> 
+											<td> 
+												<label> 
+													<input type="radio" name='icon' id="5"> 
+													<img src="images/badge_icons/5.png">
+												</label> 
 										</tr>
-
+										
 										<tr>
-											<td>
-												<label>
-													<input type="radio" name='icon' id="6">
-													<img src="badge_icons\6.png">
-												</label>
-											<td>
-												<label>
-													<input type="radio" name='icon' id="7">
-													<img src="badge_icons\7.png">
-												</label>
-											<td>
-												<label>
-													<input type="radio" name='icon' id="8">
-													<img src="badge_icons\8.png">
-												</label>
-											<td>
-												<label>
-													<input type="radio" name='icon' id="9">
-													<img src="badge_icons\9.png">
-												</label>
-											<td>
-												<label>
-													<input type="radio" name='icon' id="10">
-													<img src="badge_icons\10.png">
-												</label>
+											<td> 
+												<label> 
+													<input type="radio" name='icon' id="6"> 
+													<img src="images/badge_icons/6.png">
+												</label> 
+											<td> 
+												<label> 
+													<input type="radio" name='icon' id="7"> 
+													<img src="images/badge_icons/7.png">
+												</label> 
+											<td> 
+												<label> 
+													<input type="radio" name='icon' id="8"> 
+													<img src="images/badge_icons/8.png">
+												</label> 
+											<td> 
+												<label> 
+													<input type="radio" name='icon' id="9"> 
+													<img src="images/badge_icons/9.png">
+												</label> 
+											<td> 
+												<label> 
+													<input type="radio" name='icon' id="10"> 
+													<img src="images/badge_icons/10.png">
+												</label> 
 										</tr>
-
+										
 										<tr>
-											<td>
-												<label>
-													<input type="radio" name='icon' id="11">
-													<img src="badge_icons\11.png">
-												</label>
-											<td>
-												<label>
-													<input type="radio" name='icon' id="12">
-													<img src="badge_icons\12.png">
-												</label>
-											<td>
-												<label>
-													<input type="radio" name='icon' id="13">
-													<img src="badge_icons\13.png">
-												</label>
-											<td>
-												<label>
-													<input type="radio" name='icon' id="14">
-													<img src="badge_icons\14.png">
-												</label>
-											<td>
-												<label>
-													<input type="radio" name='icon' id="15">
-													<img src="badge_icons\15.png">
-												</label>
+											<td> 
+												<label> 
+													<input type="radio" name='icon' id="11"> 
+													<img src="images/badge_icons/11.png">
+												</label> 
+											<td> 
+												<label> 
+													<input type="radio" name='icon' id="12"> 
+													<img src="images/badge_icons/12.png">
+												</label> 
+											<td> 
+												<label> 
+													<input type="radio" name='icon' id="13"> 
+													<img src="images/badge_icons/13.png">
+												</label> 
+											<td> 
+												<label> 
+													<input type="radio" name='icon' id="14"> 
+													<img src="images/badge_icons/14.png">
+												</label> 
+											<td> 
+												<label> 
+													<input type="radio" name='icon' id="15"> 
+													<img src="images/badge_icons/15.png">
+												</label> 
 										</tr>
-
+										
 										<tr>
-											<td>
-												<label>
-													<input type="radio" name='icon' id="16">
-													<img src="badge_icons\16.png">
-												</label>
-											<td>
-												<label>
-													<input type="radio" name='icon' id="17">
-													<img src="badge_icons\17.png">
-												</label>
-											<td>
-												<label>
-													<input type="radio" name='icon' id="18">
-													<img src="badge_icons\18.png">
-												</label>
-											<td>
-												<label>
-													<input type="radio" name='icon' id="19">
-													<img src="badge_icons\19.png">
-												</label>
-											<td>
-												<label>
-													<input type="radio" name='icon' id="20">
-													<img src="badge_icons\20.png">
-												</label>
+											<td> 
+												<label> 
+													<input type="radio" name='icon' id="16"> 
+													<img src="images/badge_icons/16.png">
+												</label> 
+											<td> 
+												<label> 
+													<input type="radio" name='icon' id="17"> 
+													<img src="images/badge_icons/17.png">
+												</label> 
+											<td> 
+												<label> 
+													<input type="radio" name='icon' id="18"> 
+													<img src="images/badge_icons/18.png">
+												</label> 
+											<td> 
+												<label> 
+													<input type="radio" name='icon' id="19"> 
+													<img src="images/badge_icons/19.png">
+												</label> 
+											<td> 
+												<label> 
+													<input type="radio" name='icon' id="20"> 
+													<img src="images/badge_icons/20.png">
+												</label> 
 										</tr>
 									</table>
 								</section>
+							
+								<section id="badgeByIconInformationSection">
 
-
-							</form>
+								</section>
+								
+								</form>
+							</section>
 						</section>
-					</section>
-
-
-				</main>
+					</main>	
 			</div>
 		</div>
 		<footer id="footerInfo">
