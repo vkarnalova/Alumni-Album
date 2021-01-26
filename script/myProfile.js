@@ -22,7 +22,11 @@ window.onload = function () {
             addAvatar(photo);
         }
     });
+
+    
 }
+
+
 
 function addAvatar(photo) {
     var data = new FormData()

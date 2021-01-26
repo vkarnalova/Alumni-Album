@@ -258,3 +258,22 @@ function getCurrentUser() {
 
     return null;
 }
+
+function getUsers($data, $db) {    
+    
+    if (isEmptyString($data["username"])) {
+        return ["success" => false, "data" => "Няма намерени потребители."];
+    }
+    $sql = "SELECT username, class FROM users WHERE username LIKE '%{$data["username"]}%' AND username NOT LIKE '{$data["currentUser"]}'";
+    $query = $db->selectUsersBySimiliarUsernameQuery($sql);
+    if ($query["success"]) {
+        $users = $query["data"]->fetchAll(PDO::FETCH_ASSOC);
+        if ($users) {
+            return ["success" => true, "data" => $users];
+        } else {
+            return ["success" => false, "data" => "Няма намерени потребители."];
+        }
+    } else {
+        return ["success" => false, "data" => $query];
+    }
+}

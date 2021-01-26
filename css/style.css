@@ -67,6 +67,7 @@ body {
 /* navigation*/
 
 #navWrapper {
+	
 	height: 90px;
 	background: url(images/nav-image.png) no-repeat center top;
 }
@@ -113,18 +114,72 @@ body {
 	
 }
 
+.dropdown {
+	float: right;
+	height: 25px;
+	width: 17%;
+	z-index: 1;
+	position: relative;
+}
+
+.dropdownContent {
+	border-radius: 5px;
+	background-color:#f4f8fa;
+	border: 1px solid #94ccdd;
+	width: 92%;
+	height: fit-content;
+	display: none;
+	-moz-transition: color 0.35s ease-in-out, background-color 0.35s ease-in-out;
+	-webkit-transition: color 0.35s ease-in-out, background-color 0.35s ease-in-out;
+	-o-transition: color 0.35s ease-in-out, background-color 0.35s ease-in-out;
+	-ms-transition: color 0.35s ease-in-out, background-color 0.35s ease-in-out;
+	transition: color 0.35s ease-in-out, background-color 0.35s ease-in-out;
+	
+}
+
+#siteNav .foundUsers {
+	border: none;
+	text-transform: none;
+	display: flex;
+	font-size: 10pt;
+}
+
+
+#siteNav .foundUsers div {
+	display: flex;
+	flex-direction: column;
+}
+
+#siteNav .foundUsers img {
+	margin-right: 10px;
+	margin-top: 5px;
+	border: 1px solid #c3d0d4;
+}
+
+.dropdownContent ul li {
+	border-bottom: 1px dashed #c3d0d4;
+	padding-top: 10px;
+}
+
+.dropdownContent ul {
+	padding: 0;
+}
+
 
 .search {
-    background-image: url("images/search--v1.png") no-repeat;
-    background-size: 1px;
-    background-position: 80%;
+	background-image: url("images/search--v1.png") top left;
+	background-repeat: no-repeat;
+	display: inline-block;
+    overflow: hidden;
+    background-size: 50px;
+    background-position: 10%;
     background-color:#e0f0f7;
-    border-radius: 20px;
-    height: 25px;
-    width: 17%;
+	border-radius: 5px;
+	width: 90%;
+	height: 25px;
 	text-indent: 1rem;
 	border: 1px solid #c3d0d4;
-	float: right;
+	
 	outline: none;
 	margin-top: 20px;
 }
@@ -132,6 +187,12 @@ body {
 .search:focus {
 	border: 2px solid #a3d6e6;
 	
+}
+
+.dropdownContent #closeIcon {
+	border: none;
+	cursor: pointer;
+	float: right;
 }
 
 /* main */

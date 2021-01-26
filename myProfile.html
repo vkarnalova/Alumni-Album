@@ -7,6 +7,7 @@
 	<link rel="stylesheet" href="css/style.css" />
 	<link rel="stylesheet" href="css/myProfile.css" />
 	<script src="script/myProfile.js"> </script>
+	<script src="script/findUsers.js"> </script>
 	<script src="script/ajax.js"> </script>
 </head>
 
@@ -24,14 +25,20 @@
 					<div class="container">
 						<nav id="siteNav">
 							<ul>
-								<li class="active"><a href="myProfile.html">Профил</a></li>
-								<li><a href="search.html">Търсене</a></li>
-								<li><a href="upload.html">Качване</a></li>
-								<li><a href="about.html">За екипа</a></li>
-								<li><a href="login.html">Изход</a></li>
+								<li class="active">&#127968; <a href="myProfile.html">Моят профил</a></li>
+								<li>&#128247; <a href="search.html">Търси снимки</a></li>
+								<li>&#128194; <a href="upload.html">Качи снимки</a></li>
+								<li>&#128211; <a href="about.html">За екипа</a></li>
+								<li>&#128682; <a href="login.html">Изход</a></li>
 							</ul>
-
-							<input class="search" placeholder="Търсене" type="text">
+							
+							<section class="dropdown">
+								
+								<input class="search" placeholder="&#x1f50e; Търси потребител..." id="userInput" onkeyup="findUsers(this.value)" type="text">
+								<section class="dropdownContent">
+									
+								</section>
+							</section>
 						</nav>
 					</div>
 				</div>

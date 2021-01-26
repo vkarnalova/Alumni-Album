@@ -28,6 +28,8 @@ if (preg_match("/register$/", $requestURL)) {
     addAvatar();
 } else if (preg_match("/displayUser$/", $requestURL)) {
     getCurrentUser();
+} else if (preg_match("/findUsers$/", $requestURL)) {
+    findUsers();
 } else {
     echo json_encode(["success" => false, "error" => "URL not found"]);
 }
@@ -413,6 +415,33 @@ function addAvatar()
         $response = ["success" => false, "data" => $errors];
     } else {
         $response = ["success" => true];
+    }
+
+    echo json_encode($response);
+}
+
+function findUsers() {
+    $errors = [];
+    $response = [];
+
+    if (isset($_POST)) {
+        $currentUser = $_SESSION["username"];
+        $username = isset($_POST["username"]) ? $_POST["username"] : "";
+        $data = ["currentUser" => $currentUser, "username" => $username];
+        $db = new Database();
+        $query = getUsers($data, $db);
+
+        if ($query["success"]) {
+            $response = ["success" => true, "data" => $query];
+        } else {
+            $response = ["success" => false];
+        }
+    } else {
+        $errors[] = "Invalid request";
+    }
+
+    if ($errors) {
+        $response = ["success" => false, "error" => $errors];
     }
 
     echo json_encode($response);

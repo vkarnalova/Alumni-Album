@@ -215,4 +215,16 @@ class Database
             return ["success" => false, "error" => $e->getMessage()];
         }
     }
+
+    public function selectUsersBySimiliarUsernameQuery($sql)
+    {
+        $selectUsersBySimiliarUsernameStatement = $this->connection->prepare($sql);
+
+        try {
+            $selectUsersBySimiliarUsernameStatement->execute();
+            return ["success" => true, "data" => $selectUsersBySimiliarUsernameStatement];
+        } catch (PDOException $e) {
+            return ["success" => false, "error" => $e->getMessage()];
+        }
+    }
 }
