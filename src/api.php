@@ -37,10 +37,8 @@ function register()
     $errors = [];
     $response = [];
 
-    if ($_POST) {
-        $data = json_decode($_POST["data"], true);
-
-        $filePath = $data["filePath"];
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $filePath = $_FILES['file']['tmp_name'];
         if (!registerUsers($filePath)) {
             $errors[] = "Error registering users";
         }
@@ -55,32 +53,6 @@ function register()
     }
 
     echo json_encode($response);
-}
-
-function registerUsers($filePath)
-{
-    $db = new Database();
-
-    $handle = fopen($filePath, "r");
-    if ($handle) {
-        while (($line = fgets($handle)) !== false) {
-            // process the line 
-            list($username, $email, $firstName, $familyName, $major, $class) = explode(',', $line);
-            $pass = generateRandomPassword();
-            $db->insertUserQuery([
-                "user" => $username, "password" => $pass,
-                "email" => $email, "admin" => false, "firstName" => $firstName,
-                "familyName" => $familyName, "major" => $major, "class" => $class
-            ]);
-            mailPasswordToUser($username, $pass, $email);
-        }
-
-        fclose($handle);
-        return true;
-    } else {
-        // error opening the file.
-        return false;
-    }
 }
 
 function login()

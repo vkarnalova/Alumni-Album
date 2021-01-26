@@ -98,6 +98,9 @@ function displayPersonalInformation() {
         // display personal info on success
         displayData(data);
         displayAvatar(data['username']);
+        if (data['admin'] == true) {
+            addRegisterUsersButton();
+        }
     }, function (error) {
         alert(error);
     },
@@ -126,6 +129,7 @@ function addListElement(info, id) {
     li.appendChild(text);
     ol.appendChild(li);
 }
+
 function getKeyRepresentation(key) {
     let representationString = "";
     switch (key) {
@@ -165,4 +169,61 @@ function getKeyRepresentation(key) {
     }
 
     return representationString;
+}
+
+function addRegisterUsersButton() {
+    let registerUsersInput = document.getElementById("registerUsersInput");
+    let registerUsersButton = document.getElementById("registerUsersButton");
+    if (!registerUsersInput && !registerUsersButton) {
+        registerUsersInput = document.createElement("input");
+        registerUsersInput.innerHTML = "Регистрирай потребители";
+        registerUsersInput.setAttribute("id", "registerUsersInput");
+        registerUsersInput.setAttribute("type", "file");
+
+        registerUsersInput.addEventListener("change", function () {
+            // Click on the hidden upload button
+            let registerUsersButton = document.getElementById('registerUsersButton');
+            registerUsersButton.click();
+        });
+
+
+        registerUsersButton = document.createElement("button");
+        registerUsersButton.innerHTML = "Регистрирай потребители";
+        registerUsersButton.setAttribute("id", "registerUsersButton");
+        // This button should be hidden. We need this because we want to trigger 
+        //the click event when a file is selected so that the user could select and upload a file with only one click
+        registerUsersButton.style.display = 'none';
+        registerUsersButton.addEventListener("click", function () {
+            let file = document.getElementById("registerUsersInput").files[0];
+            if (file) {
+                registerUsers(file);
+            }
+        });
+
+        messageAdminSection = document.createElement("section");
+        messageAdminSection.setAttribute("id", "messageAdminSection");
+
+        let adminSection = document.getElementById("adminSection");
+        adminSection.appendChild(registerUsersInput);
+        adminSection.appendChild(registerUsersButton);
+        adminSection.appendChild(messageAdminSection);
+    }
+}
+
+function registerUsers(file) {
+    var data = new FormData()
+    data.append('file', file);
+
+    const settings = {
+        method: 'POST',
+        body: data
+    };
+
+    ajax('src/api.php/register', settings, function (data) {
+        document.getElementById("messageAdminSection").innerHTML = 'Успешно регистриране на потребители.';
+        document.getElementById("registerUsersInput").value = "";
+    }, function (error) {
+        document.getElementById("messageAdminSection").innerHTML = 'Неуспешно регистриране на потребители.';
+    },
+    );
 }
