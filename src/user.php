@@ -49,3 +49,8 @@ function addAvatarForUser($username)
         }
     }
 }
+
+function extractUsernameFromUrl($requestURL) 
+{
+    return substr($requestURL, strrpos($requestURL, "/") + 1);
+}
