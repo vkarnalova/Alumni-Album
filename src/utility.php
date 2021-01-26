@@ -163,7 +163,7 @@ function getFiles($data, $db) {
         if ($files) {
             return ["success" => true, "data" => $files];
         } else {
-            return ["success" => false, "data" => 'No files matching'];
+            return ["success" => false, "data" => "Няма намерени снимки."];
         }
     } else {
         return ["success" => false, "data" => $query];
