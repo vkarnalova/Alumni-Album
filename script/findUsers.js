@@ -3,22 +3,26 @@
 
 
 function findUsers(username) {
-    var data = new FormData();
-    data.append("username", username);
+    if (username === "") {
+        hideUsers();
+    } else {
+        var data = new FormData();
+        data.append("username", username);
 
-    const settings = {
-        method: 'POST',
-        body: data
-    };
+        const settings = {
+            method: 'POST',
+            body: data
+        };
 
-    ajax('src/api.php/findUsers', settings, function (data) {
-        console.log(data);
-        displayFoundUsers(data.data);
-    }, function (error) {
-        console.log(error);
-        //alert(error);
-    },
-    );
+        ajax('src/api.php/findUsers', settings, function (data) {
+            displayFoundUsers(data.data);
+        }, function (error) {
+            console.log(error);
+            //alert(error);
+        },
+        );
+    }
+    
 }
 
 function displayFoundUsers(users) {

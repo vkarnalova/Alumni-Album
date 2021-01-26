@@ -192,7 +192,6 @@ body {
 .dropdownContent #closeIcon {
 	border: none;
 	cursor: pointer;
-	float: right;
 }
 
 /* main */
