@@ -49,47 +49,86 @@
 
 			<div class="container">
 				<main id="main">
-					<section id="badgeFormSection">
-						<header>
+						<!--<header>
 							<h2>Профил</h2>
-						</header>
+						</header>-->
 
 						<section>
 							<!-- Avatar -->
-							<img src="avatars/default.png" alt="Avatar not found" id="avatar"
-								onerror="this.onerror=null; this.src='avatars/default.png';" />
 
-							<div>
-								<input id="addAvatarInput" type="file" placeholder="Добави аватар" />
-								<!--This button should be hidden. We need this because we want to trigger the click event 
+							<section id="profileInformation">
+							
+								<section id="badgesPanel">		
+									<img src="avatars/default.png" alt="Avatar not found" id="avatar"
+									onerror="this.onerror=null; this.src='avatars/default.png';" />
+
+									<table id = "badgesTable">
+									
+									</table>
+									<div id="badgeDetails">
+										
+									</div>
+
+									<div>
+									<input id="addAvatarInput" type="file" placeholder="Добави аватар" />
+									<!--This button should be hidden. We need this because we want to trigger the click event 
 									when a file is selected so that the user could select and upload a file with only one click-->
-								<button id="addAvatarButton" style="display: none"></button>
-							</div>
+									<button id="addAvatarButton" style="display: none"></button>
+									<label id="labelForAvatarButton" for="addAvatarInput"><p id="uploadButton">Качи аватар!</p></label>
+									</div>
+								</section>
+								
+								<section id="clear"></section>
+								
+								<section id="infoDetails">
+									<p id="fullName"> </p>
+									<p id="majorAndClass">специалност "</p>
+									<p id="potok">Поток: </p>
+									<p id="groupNumber">Факултативна група: </p> 
+									<p id="phoneNumber">Телефонен номер: </p>
+									<p id="address">Адрес: </p>
+									<p id="additionalInfo">Допълнителна информация: </p>
+	
+								</section>
+							</section>
 
-							<ul id="info"></ul>
-							<p id="profile_description"> Тук се показват името на потребителя + значки:
-							<p>
-						</section>
+						<section id="pageCover"></section>
+							<section id="formSection">
+								<header id="submitionFormTitle">
+									<h2> Редактирайте личната си информация </h2>
+									<p id="submitionMessage"> </p>
+								</header>	
+								<form id="changeInfoForm">
+									<fieldset>
+										<legend>Факултативна информация</legend>
+										Поток: <input type="number" min="1" max="2" step="1" placeholder="1/2" id="potokForm"><br>
+										Факултативна група: <input type="number" min="1" max="8" step="1" placeholder="Група"
+										id="groupNumberForm"><br>
+									</fieldset>
 
-						<section>
-							<form id="changeInfoForm" style="display: none">
-								<input type="number" min="1" max="2" step="1" placeholder="Поток" id="potokForm"><br>
-								<input type="number" min="1" max="8" step="1" placeholder="Група"
-									id="groupNumberForm"><br>
-								<input type="text" id="phoneNumberForm" placeholder="Телефонен номер"><br>
-								<input type="text" id="addressForm" placeholder="Адрес"><br>
-								<input type="text" id="additionalInfoForm" placeholder="Допълнителна информация"><br>
+									<fieldset>
+										<legend>Контакти</legend>
+										Телефонен номер: <input type="text" id="phoneNumberForm" placeholder="Телефонен номер"><br>
+										Адрес: <input type="text" id="addressForm" placeholder="Адрес"><br>
+									</fieldset>
 
-								<input id="changeInfoButton" type="submit" value="Запази">
-							</form>
-
+									<fieldset>
+										<legend>Допълнителна информация</legend>
+										<textarea type="text" id="additionalInfoForm" placeholder="Споделете нещо за себе си! (напр. магистратура, месторабота, любим предмет в университета и др.)"></textarea>
+									</fieldset>
+									
+									<section id="formButtons">
+										<input id="changeInfoButton" type="submit" value="Запази!">
+										<input id="backButton" type="submit"value="Обратно в профила!">
+									</section>
+								</form>
+							</section>
 							<!--click this to display the form -->
-							<button id="changeInfo">Редактирай</button>
+							<button id="changeInfo">Редактирай профила!</button>
 						</section>
-
-						<section id="adminSection">
+							<section id="adminSection">
+							</section>
 						</section>
-					</section>
 				</main>
 			</div>
 		</div>
