@@ -1,6 +1,10 @@
 ﻿function main() {
 	displayProfileInformation();
-	displayBadges();
+	var isShown = [];
+	for(var i = 0; i < 20; i++) {
+		isShown[i] = false;
+	}
+	displayBadges(isShown);
 
 	document.getElementById("assignBadgeButton").addEventListener("click", event => { 
 		event.preventDefault();
