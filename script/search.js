@@ -1,4 +1,5 @@
 window.onload = function () {
+    displayUser();
     let checkboxes = document.getElementsByClassName("checkbox");
     for (let i = 0; i < checkboxes.length; i++) {
         checkboxes[i].addEventListener("change", function () {

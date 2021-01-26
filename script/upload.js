@@ -1,6 +1,7 @@
 var fileList = [];
 
 window.onload = function () {
+    displayUser();
     document.getElementById("uploadImagesForm").addEventListener("submit", event => {
         event.preventDefault();
         uploadFiles();

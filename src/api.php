@@ -27,7 +27,7 @@ if (preg_match("/register$/", $requestURL)) {
 } else if (preg_match("/avatar$/", $requestURL)) {
     addAvatar();
 } else if (preg_match("/displayUser$/", $requestURL)) {
-    getCurrentUser();
+    displayUser();
 } else if (preg_match("/findUsers$/", $requestURL)) {
     findUsers();
 } else if(preg_match("/show-personal-information/", $requestURL)) {
@@ -226,9 +226,9 @@ function generateRandomPassword()
 function mailPasswordToUser($username, $password, $email)
 {
     $subject = "Парола за Алумни Албум";
-    $message = "Привет, " . "$username" . "! :)\n\nДобре дошли в Алумни Албум!\nПаролата за вашия потребителски профил е: " . "$password" . " .\nВинаги можете да я смените по-късно от настройките на профила.\n\nПоздрави\nЕкипа на Алумни Албум :)";
+    $message = "Привет, " . "$username" . "! :)\n\nДобре дошли в Алумни Албум!\nПаролата за вашия потребителски профил е: " . "$password" . " .\n\nПоздрави\nЕкипа на Алумни Албум :)";
 
-    //mail($email, $subject, $message);
+    mail($email, $subject, $message);
 }
 
 function addBadge()
@@ -449,6 +449,28 @@ function showPersonalInformation($requestURL) {
         $response = ["success" => false, "data" => $errors];
     } else {
         $response = ["success" => true, "data" => $user];
+    }
+
+    echo json_encode($response);
+}
+
+function displayUser() {
+    $errors = [];
+    $response = [];
+
+    if (isset($_GET)) {
+        $username = getCurrentUser();
+        
+
+        if ($username) {
+            $response = ["success" => true, "data" => $username];
+            
+        } else {
+            $response = ["success" => false];
+        }
+    } else {
+        $errors[] = "Invalid request";
+        $response = ["success" => false, "data" => $errors];
     }
 
     echo json_encode($response);
