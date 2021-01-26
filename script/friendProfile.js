@@ -4,7 +4,8 @@
 	for(var i = 0; i < 20; i++) {
 		isShown[i] = false;
 	}
-	displayBadges(isShown);
+	var user = location.href.substring(location.href.lastIndexOf('?') + 1);
+	displayBadges(isShown, user, 'src/api.php/show-badges');
 
 	document.getElementById("assignBadgeButton").addEventListener("click", event => { 
 		event.preventDefault();
