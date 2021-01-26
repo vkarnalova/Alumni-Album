@@ -9,8 +9,13 @@ function displayUser() {
 
 
     ajax('src/api.php/displayUser', settings, function (data) {
-        console.log(data);
-		display(data);
+        
+		if (data !== null) {
+            let logo = document.getElementById("logo");
+            let h3 = document.createElement("h3");
+            h3.innerHTML += data;
+            logo.appendChild(h3);
+        }
         
     }, function (error) {
         alert(error);
@@ -18,12 +23,3 @@ function displayUser() {
     );
 }
 
-function display(data) {
-    if (data !== null) {
-        let logo = document.getElementById("logo");
-        let h3 = document.createElement("h3");
-        h3.innerHTML += data;
-        logo.appendChild(h3);
-    }
-    
-}

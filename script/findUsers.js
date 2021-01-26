@@ -1,7 +1,3 @@
-
-
-
-
 function findUsers(username) {
     if (username === "") {
         hideUsers();
