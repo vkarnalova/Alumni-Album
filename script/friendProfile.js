@@ -24,12 +24,12 @@
 function showBadgeSubmittionForm() {
 	cleanMessages();
 	document.getElementById("pageCover").style.display = "block";
-	document.getElementById("badgeFormSection").style.display = "block";
+	document.getElementById("formSection").style.display = "block";
 }
 
 function hideSubmittionForm() {
 	document.getElementById("pageCover").style.display = "none";
-	document.getElementById("badgeFormSection").style.display = "none";
+	document.getElementById("formSection").style.display = "none";
 	location.reload();
 }
 
