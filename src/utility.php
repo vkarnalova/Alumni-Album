@@ -175,7 +175,7 @@ function isEmptyString($var) {
 }
 
 function isEmptyArray($data) {
-    return isEmptyString($data["major"]) && isEmptyString($data["class"]) && isEmptyString($data["potok"])  && isEmptyString($data["groupNumber"]) && isEmptyString($data["occasion"]) && isEmptyString($data["tags"]);
+    return isEmptyString($data["major"]) && isEmptyString($data["class"]) && isEmptyString($data["potok"])  && isEmptyString($data["groupNumber"]) && isEmptyString($data["occasion"]) && isEmptyString($data["date"]) && isEmptyString($data["tags"]);
 }
 
 function generateQuery($data) {
@@ -218,7 +218,10 @@ function generateQuery($data) {
         
         
         if ($attribute == "date") {
-            $sql .= "(date BETWEEN " . $value . "00:00:00 AND " . $value . "23:59:59)";
+            //$sql .= "(date BETWEEN " . $value . "00:00:00 AND " . $value . "23:59:59)";
+            $start = $value . " 00:00:00";
+            $end = $value . " 23:59:59";
+            $sql .= "(date BETWEEN '" . $start . "' AND '" . $end . "')";
         } else { 
             $sql .=  $attribute ."='". $value . "'";
         }

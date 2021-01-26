@@ -104,6 +104,7 @@ function searchFiles(checkboxes) {
     
 
     ajax('src/api.php/search', settings, function (data) {
+        
         displayFiles(data);
     }, function (error) {
         alert(error);
