@@ -43,7 +43,7 @@ function uploadFile(file, tags, photosInfo) {
     data.append('file', file);
     data.append('tags', JSON.stringify(tags));
     data.append('photosInfo', JSON.stringify(photosInfo));
-
+    
     const settings = {
         method: 'POST',
         body: data
@@ -73,17 +73,16 @@ function getPhotosAdditionalInfo() {
     let potok = document.getElementById("potok").valueAsNumber ? document.getElementById("potok").valueAsNumber : null;
     let groupNumber = document.getElementById("groupNumber").valueAsNumber ? document.getElementById("groupNumber").valueAsNumber : null;
     let occasion = document.getElementById("occasion").value ? document.getElementById("occasion").value : null;
-
     var photosInfo = {
         major: major,
         class: classYear,
         potok: potok,
         groupNumber: groupNumber,
-        occasion: occasion,
+        occasion: occasion
     };
 
     return photosInfo;
-    ;
+    
 }
 
 function validateInput() {

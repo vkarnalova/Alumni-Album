@@ -103,7 +103,7 @@ function searchFiles(checkboxes) {
 
     
 
-    ajax('src/api.php/search', settings, function (data, query) {
+    ajax('src/api.php/search', settings, function (data) {
         displayFiles(data);
     }, function (error) {
         alert(error);
@@ -119,7 +119,7 @@ function displayFiles(files) {
 
         let header = document.createElement("header");
         let heading = document.createElement("h3");
-        let headingText = document.createTextNode("випуск");
+        let headingText = document.createTextNode(files[i].class);
         heading.appendChild(headingText);
         header.appendChild(heading);
         article.appendChild(header);
@@ -134,7 +134,7 @@ function displayFiles(files) {
         article.appendChild(div);
 
         let span = document.createElement("span");
-        let text = document.createTextNode("user");
+        let text = document.createTextNode(files[i].user);
         span.appendChild(text);
         article.appendChild(span);
 
