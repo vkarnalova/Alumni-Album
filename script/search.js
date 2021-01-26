@@ -104,13 +104,13 @@ function searchFiles(checkboxes) {
 
 
     ajax('src/api.php/search', settings, function (data) {
-        
+
         displayFiles(data);
-        //hideError();
+        hideError();
         createPdfButton();
-        
+
     }, function (error) {
-       //displayError(error[0]);
+        displayError(error[0]);
         hidePdfButton();
     },
     );
@@ -143,9 +143,6 @@ function displayFiles(files) {
         span.appendChild(text);
         article.appendChild(span);
 
-
-
-
         section.appendChild(article);
     }
 }
@@ -161,7 +158,7 @@ function hideError() {
 
 function clearFiles() {
     document.getElementById("photos").innerHTML = "";
-    
+
 }
 
 function createPdfButton() {
@@ -176,6 +173,8 @@ function createPdfButton() {
         })
 
         document.getElementsByClassName("photoSection")[0].appendChild(createPdfButton);
+    } else {
+        createPdfButton.style.display = '';
     }
 }
 
