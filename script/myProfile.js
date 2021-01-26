@@ -170,7 +170,7 @@ function addRegisterUsersButton() {
         messageAdminSection.setAttribute("id", "messageAdminSection");
 
         let adminSection = document.getElementById("adminSection");
-        label.innerHTML = "<p id=\"register\"> Регистрирай потребители! </p>";
+        label.innerHTML = "Регистрирай потребители!";
 
         adminSection.appendChild(registerUsersInput);
         adminSection.appendChild(registerUsersButton);
