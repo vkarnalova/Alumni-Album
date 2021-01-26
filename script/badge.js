@@ -1,5 +1,5 @@
 function addBadge() {
-    var assignedUser = location.href.substring(location.href.lastIndexOf('/') + 1); //в случай че адресът е от вида ../badge-assignment.html/profila-na-rosi
+    var assignedUser = location.href.substring(location.href.lastIndexOf('?') + 1); //в случай че адресът е от вида ../badge-assignment.html/profila-na-rosi
 	var title = document.getElementById("badge_title").value;
     var description = document.getElementById("badge_description").value;
 	var icon = getBadgeIcon();
@@ -63,8 +63,7 @@ function getBadgeIcon() {
 	}
 }
 
-function displayBadges(isShown) {
-	var user = location.href.substring(location.href.lastIndexOf('/') + 1); //../profila-na-mimi
+function displayBadges(isShown, user, url) { //../profila-na-mimi
 	var data = new FormData();
     data.append('user', user);
 
@@ -75,7 +74,7 @@ function displayBadges(isShown) {
 
 	var allIcons = [];
 	var count = [0, 0];
-    ajax('src/api.php/show-badges', settings, function (data) {
+    ajax(url, settings, function (data) {
 		data.forEach(record => display(record, allIcons, count, isShown));
     }, function (error) {
         alert(error);
@@ -105,11 +104,12 @@ function displayUnderNewlyCreatedIcon(record, count, isShown) {
 		count[1]++;
 		var tr = document.createElement('tr');
 		tr.id = count[1];
+		img = document.createElement('img');
+		img.id = elementId;
+		img.src = "badge_icons/" + record.iconId + ".png";
 		var td = document.createElement('td');
 		td.id = 'td' + record.iconId;
-		img = document.createElement('img');
-		img.id = elementId
-		td.appendChild(img).src = "badge_icons/" + record.iconId + ".png";
+		td.appendChild(img);
 		tr.appendChild(td);
 		document.getElementById("badgesTable").appendChild(tr);
 		
@@ -141,7 +141,7 @@ function displayDetails(record) {
 	var li = document.createElement("li");
 	li.innerHTML = "👍 \"" +  record.title + "\", ";
 	li.innerHTML += "възложена от "+ record.assigningUser + " ";
-	if(record.description != "") {
+	if(record.description != "" && record.description != null) {
 		li.innerHTML += " (" + record.description + ")";
 	}
 	li.innerHTML += "<br>";
