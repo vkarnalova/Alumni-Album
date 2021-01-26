@@ -18,8 +18,10 @@ if (preg_match("/register$/", $requestURL)) {
     search();
 } else if (preg_match("/add-badge$/", $requestURL)) {
     addBadge();
-} else if (preg_match("/show-badges$/", $requestURL)) {
-    showBadges();
+} else if (preg_match("/show-badges/", $requestURL)) {
+    showFriendBadges();
+} else if(preg_match("/show-my-badges$/", $requestURL)) {
+    showMyBadges();
 } else if (preg_match("/get-user$/", $requestURL)) {
     getMyUserPersonalInfo();
 } else if (preg_match("/update-user$/", $requestURL)) {
@@ -263,33 +265,57 @@ function addBadge()
     echo json_encode($response);
 }
 
-function showBadges()
-{
+function showMyBadges() {
+    $errors = [];
+    $response = [];
+
+    $username = $_SESSION["username"];
+ 
+    if($username) {
+        $response = showBadges($username);
+    } else {
+        $errors[] = "Invalid request";
+    }
+
+    echo json_encode($response);
+}
+
+function showFriendBadges() {
     $errors = [];
     $response = [];
 
     if (isset($_POST)) {
         $user = $_POST["user"];
 
-        $db = new Database();
-        $query = $db->selectBadge(["assignedUser" => $user]);
-
-        $listOfBadges = $query["data"]->fetchAll(PDO::FETCH_ASSOC);
-
-        if ($query["success"]) {
-            $response = ["success" => true, "data" => $listOfBadges];
-        } else {
-            $response = ["success" => false];
-        }
+        $response = showBadges($user);
     } else {
         $errors[] = "Invalid request";
+    }
+
+    echo json_encode($response);
+}
+
+function showBadges($username)
+{
+    $errors = [];
+    $response = [];
+
+    $db = new Database();
+    $query = $db->selectBadge(["assignedUser" => $username]);
+
+    $listOfBadges = $query["data"]->fetchAll(PDO::FETCH_ASSOC);
+
+    if ($query["success"]) {
+         $response = ["success" => true, "data" => $listOfBadges];
+    } else {
+        $response = ["success" => false];
     }
 
     if ($errors) {
         $response = ["success" => false, "error" => $errors];
     }
 
-    echo json_encode($response);
+    return $response;
 }
 
 function getMyUserPersonalInfo()

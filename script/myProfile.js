@@ -1,10 +1,19 @@
 window.onload = function () {
     displayPersonalInformation();
+    var isShown = [];
+	for(var i = 0; i < 20; i++) {
+		isShown[i] = false;
+    }
+	displayMyBadges(isShown);
 
     document.getElementById("changeInfo").addEventListener("click", function () {
-        var changeInfoForm = document.getElementById("changeInfoForm");
-        changeInfoForm.style.display = '';
+		event.preventDefault();
+        showSubmittionForm();
     });
+
+    document.getElementById("backButton").addEventListener("click", event => { 
+		event.preventDefault();
+		hideSubmittionForm()});
 
     document.getElementById("changeInfoForm").addEventListener("submit", event => {
         updateUserInformation();
@@ -22,11 +31,7 @@ window.onload = function () {
             addAvatar(photo);
         }
     });
-
-    
 }
-
-
 
 function addAvatar(photo) {
     var data = new FormData()
@@ -77,9 +82,9 @@ function updateUserInformation() {
 
 
     ajax('src/api.php/update-user', settings, function (data) {
-        window.location.href = 'myProfile.html';
+        showSuccessMessage();
     }, function (error) {
-        alert(error);
+        showSuccessMessage();
     },
     );
 }
@@ -100,8 +105,8 @@ function displayPersonalInformation() {
 
     ajax('src/api.php/get-user', settings, function (data) {
         // display personal info on success
-        displayData(data);
-        displayAvatar(data['username']);
+        fillInFieldsWithInformation(data);
+        displayAvatar(data.username);
         if (data['admin'] == true) {
             addRegisterUsersButton();
         }
@@ -125,65 +130,21 @@ function displayAvatar(username) {
     document.getElementById("avatar").src = "avatars/" + username + ".png"
 }
 
-function addListElement(info, id) {
-    let ol = document.querySelector("#info");
-    let li = document.createElement('li');
-    li.setAttribute("id", id);
-    let text = document.createTextNode(info);
-    li.appendChild(text);
-    ol.appendChild(li);
-}
-
-function getKeyRepresentation(key) {
-    let representationString = "";
-    switch (key) {
-        case 'username':
-            representationString = "Потребителско име";
-            break;
-        case 'email':
-            representationString = "Имейл";
-            break;
-        case 'firstName':
-            representationString = "Първо име";
-            break;
-        case 'familyName':
-            representationString = "Фамилно име";
-            break;
-        case 'major':
-            representationString = "Специалност";
-            break;
-        case 'class':
-            representationString = "Випуск";
-            break;
-        case 'potok':
-            representationString = "Поток";
-            break;
-        case 'groupNumber':
-            representationString = "Група";
-            break;
-        case 'phoneNumber':
-            representationString = "Телефонен номер";
-            break;
-        case 'address':
-            representationString = "Адрес";
-            break;
-        case 'additionalInfo':
-            representationString = "Допълнителна информация";
-            break;
-    }
-
-    return representationString;
-}
-
 function addRegisterUsersButton() {
     let registerUsersInput = document.getElementById("registerUsersInput");
     let registerUsersButton = document.getElementById("registerUsersButton");
     if (!registerUsersInput && !registerUsersButton) {
+        var label = document.createElement("label");
+        label.value ="Регистрирай потребители!";
+        label.setAttribute("id", "registerUsersLabel");
+
         registerUsersInput = document.createElement("input");
         registerUsersInput.innerHTML = "Регистрирай потребители";
         registerUsersInput.setAttribute("id", "registerUsersInput");
         registerUsersInput.setAttribute("type", "file");
 
+        label.setAttribute("for", "registerUsersInput");
+        
         registerUsersInput.addEventListener("change", function () {
             // Click on the hidden upload button
             let registerUsersButton = document.getElementById('registerUsersButton');
@@ -208,8 +169,11 @@ function addRegisterUsersButton() {
         messageAdminSection.setAttribute("id", "messageAdminSection");
 
         let adminSection = document.getElementById("adminSection");
+        label.innerHTML = "<p id=\"register\"> Регистрирай потребители! </p>";
+
         adminSection.appendChild(registerUsersInput);
         adminSection.appendChild(registerUsersButton);
+        adminSection.appendChild(label);
         adminSection.appendChild(messageAdminSection);
     }
 }
@@ -230,4 +194,26 @@ function registerUsers(file) {
         document.getElementById("messageAdminSection").innerHTML = 'Неуспешно регистриране на потребители.';
     },
     );
+}
+
+function showSubmittionForm() {
+    console.log("vlqzohme");
+	document.getElementById("pageCover").style.display = "block";
+	document.getElementById("formSection").style.display = "block";
+}
+
+function hideSubmittionForm() {
+	document.getElementById("pageCover").style.display = "none";
+    document.getElementById("formSection").style.display = "none";
+    location.reload();
+}
+
+function showSuccessMessage() {
+	document.getElementById("submitionMessage").style.color = "green";
+	document.getElementById("submitionMessage").innerHTML = "Информацията е успешно обновена!";
+}
+
+function displayMyBadges(isShown) {
+    var user = ""; //it's taken from session in php
+    displayBadges(isShown, user, 'src/api.php/show-my-badges');
 }

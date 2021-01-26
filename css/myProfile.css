@@ -1,4 +1,97 @@
 #avatar {
-    max-height: 250px;
-    max-width: 250px;
+    max-height: 300px;
+    max-width: 300px;
 }
+
+#changeInfo, #registerUsersLabel, #labelForAvatarButton {
+    float: left;
+    border: none;
+    border-radius: 10px;
+    color: white;
+	background-color: #f0940b;
+    margin-right: 10px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+#registerUsersLabel {
+    height: 16px;
+    font-size: 10pt;
+    padding: 2px;
+}
+
+#register, #uploadButton {
+    position: relative;
+    top: -19px;
+    font-size: 10pt;
+}
+
+#changeInfo:hover, #registerUsersLabel:hover, #labelForAvatarButton:hover {
+	-moz-transition: color 0.35s ease-in-out, background-color 0.35s ease-in-out;
+	-webkit-transition: color 0.35s ease-in-out, background-color 0.35s ease-in-out;
+	-o-transition: color 0.35s ease-in-out, background-color 0.35s ease-in-out;
+	-ms-transition: color 0.35s ease-in-out, background-color 0.35s ease-in-out;
+	transition: color 0.35s ease-in-out, background-color 0.35s ease-in-out;
+	cursor: pointer;
+	background-color: #1d8ba3;
+	color: white;
+	border: none;
+    overflow: hidden;
+}
+
+#labelForAvatarButton {
+    height: 16px;
+    font-size: 10pt;
+    padding: 2px;
+    position: relative;
+    left: 35%;
+}
+
+#formSection {
+    width: 30%;
+    position: fixed;
+    left: 32%;
+    top: 5%;
+    padding: 20px;
+}
+
+#changeInfoButton, #backButton {
+    border: none;
+    border-radius: 10px;
+    color: white;
+	background-color: #29b4d3;
+	margin: 10px;
+}
+
+#changeInfoButton:hover, #backButton:hover {
+	-moz-transition: color 0.35s ease-in-out, background-color 0.35s ease-in-out;
+	-webkit-transition: color 0.35s ease-in-out, background-color 0.35s ease-in-out;
+	-o-transition: color 0.35s ease-in-out, background-color 0.35s ease-in-out;
+	-ms-transition: color 0.35s ease-in-out, background-color 0.35s ease-in-out;
+	transition: color 0.35s ease-in-out, background-color 0.35s ease-in-out;
+	cursor: pointer;
+	background-color: #ebe0cc;
+	color: #29b4d3;
+	border: none;
+}
+
+#submitionFormTitle h2 {
+    text-align: center;
+}
+
+textarea {
+    width: 98%;
+    height: 100px;
+    resize: none;
+}
+
+#formButtons {
+    padding-top: 20px;
+    position: relative;
+    left: 25%;
+}
+
+#registerUsersInput, #addAvatarInput {
+    display: none;
+}
+

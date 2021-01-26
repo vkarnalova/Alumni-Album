@@ -5,7 +5,8 @@
 	for(var i = 0; i < 20; i++) {
 		isShown[i] = false;
 	}
-	displayBadges(isShown);
+	var user = location.href.substring(location.href.lastIndexOf('?') + 1);
+	displayBadges(isShown, user, 'src/api.php/show-badges');
 
 	document.getElementById("assignBadgeButton").addEventListener("click", event => { 
 		event.preventDefault();
@@ -24,12 +25,12 @@
 function showBadgeSubmittionForm() {
 	cleanMessages();
 	document.getElementById("pageCover").style.display = "block";
-	document.getElementById("badgeFormSection").style.display = "block";
+	document.getElementById("formSection").style.display = "block";
 }
 
 function hideSubmittionForm() {
 	document.getElementById("pageCover").style.display = "none";
-	document.getElementById("badgeFormSection").style.display = "none";
+	document.getElementById("formSection").style.display = "none";
 	location.reload();
 }
 
