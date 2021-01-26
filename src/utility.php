@@ -197,6 +197,10 @@ function generateQuery($data) {
         }
 
         
+        if (!$first) {
+            $sql .= " AND ";
+        } 
+        
         if ($attribute == "tags") {
             $first = True;
             $sql .= "(";
@@ -212,9 +216,7 @@ function generateQuery($data) {
 
             $sql .= ")";
             break;
-        } else if (!$first) {
-            $sql .= " AND ";
-        }
+        } 
         
         
         if ($attribute == "date") {

@@ -154,7 +154,10 @@ function upload()
                     $tags = json_decode($_POST["tags"]);
                     $photosInfo = json_decode($_POST["photosInfo"]);
                     $exifData = exif_read_data($filePath, "IFDO", 0);
-                    $date = convertToSqlDatetime($exifData["DateTime"]);
+                    $date = null;
+                    if(isset($exifData["DateTime"])) {
+                        $date = convertToSqlDatetime($exifData["DateTime"]);
+                    }                    
                     $user = $_SESSION["username"];
                     $addPhotoResult = addPhotoToDatabase($fileNameUniqId . '.' . $ext, $tags, $photosInfo, $date, $user);
                     if (!$addPhotoResult["success"]) {
