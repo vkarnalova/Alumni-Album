@@ -49,3 +49,34 @@ function addAvatarForUser($username)
         }
     }
 }
+
+function registerUsers($filePath)
+{
+    $db = new Database();
+
+    $handle = fopen($filePath, "r");
+    if ($handle) {
+        while (($line = fgets($handle)) !== false) {
+            // process the line 
+            list($username, $email, $firstName, $familyName, $major, $class) = explode(',', $line);
+            $pass = generateRandomPassword();
+            $db->insertUserQuery([
+                "user" => $username, "password" => $pass,
+                "email" => $email, "admin" => false, "firstName" => $firstName,
+                "familyName" => $familyName, "major" => $major, "class" => $class
+            ]);
+            mailPasswordToUser($username, $pass, $email);
+        }
+
+        fclose($handle);
+        return true;
+    } else {
+        // error opening the file.
+        return false;
+    }
+}
+
+function extractUsernameFromUrl($requestURL)
+{
+    return substr($requestURL, strrpos($requestURL, "/") + 1);
+}

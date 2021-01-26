@@ -45,10 +45,38 @@ function viewPicture(src) {
         popup.style.display = "none";
     }
 
-
+    createPhotoInfoList(src);
 }
 
+function createPhotoInfoList(src) {
+    let imgElement = Array.from(document.getElementById("photos").getElementsByTagName("img")).filter(imgElement => {
+        return imgElement.src == src;
+    })[0];
 
+    if (imgElement) {
+        let photoInfoElement = document.getElementById("photoInfo");
+        photoInfoElement.innerHTML = '';
+        let infoAttributes = getAttributesMap();
+
+        for (attribute in infoAttributes) {
+            let value = imgElement.getAttribute(attribute);
+            if (imgElement.getAttribute(attribute)) {
+                let li = document.createElement('li');
+                let text = document.createTextNode(infoAttributes[attribute] + ": " + value);
+                li.appendChild(text);
+                photoInfoElement.appendChild(li);
+            }
+        }
+    }
+}
+
+function getAttributesMap() {
+    return {
+        "major": "Специалност", "classyear": "Випуск", "potok": "Поток",
+        "groupNumber": "Група", "occassion": "Събитие", "user": "Качена от",
+        "date": "Дата на създаване"
+    }
+}
 
 function updateInputFields(value, flag) {
     document.getElementById(value).disabled = flag;
@@ -104,13 +132,13 @@ function searchFiles(checkboxes) {
 
 
     ajax('src/api.php/search', settings, function (data) {
-        
+
         displayFiles(data);
-        //hideError();
+        hideError();
         createPdfButton();
-        
+
     }, function (error) {
-       //displayError(error[0]);
+        displayError(error[0]);
         hidePdfButton();
     },
     );
@@ -135,6 +163,7 @@ function displayFiles(files) {
         photo.setAttribute("src", src);
         photo.setAttribute("onclick", "viewPicture(this.src)");
         photo.classList.add("photos");
+        setCustomAttributesToPhoto(photo, files[i]);
         div.appendChild(photo);
         article.appendChild(div);
 
@@ -143,10 +172,19 @@ function displayFiles(files) {
         span.appendChild(text);
         article.appendChild(span);
 
-
-
-
         section.appendChild(article);
+    }
+}
+
+function setCustomAttributesToPhoto(photoElement, data) {
+    for (let key in data) {
+        if (key != "name" && data[key]) {
+            if (key == "class") {
+                photoElement.setAttribute("classYear", data[key]);
+            } else {
+                photoElement.setAttribute(key, data[key]);
+            }
+        }
     }
 }
 
@@ -161,7 +199,7 @@ function hideError() {
 
 function clearFiles() {
     document.getElementById("photos").innerHTML = "";
-    
+
 }
 
 function createPdfButton() {
@@ -176,6 +214,8 @@ function createPdfButton() {
         })
 
         document.getElementsByClassName("photoSection")[0].appendChild(createPdfButton);
+    } else {
+        createPdfButton.style.display = '';
     }
 }
 

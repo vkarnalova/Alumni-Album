@@ -30,6 +30,8 @@ if (preg_match("/register$/", $requestURL)) {
     getCurrentUser();
 } else if (preg_match("/findUsers$/", $requestURL)) {
     findUsers();
+} else if(preg_match("/show-personal-information/", $requestURL)) {
+    showPersonalInformation($requestURL);
 } else {
     echo json_encode(["success" => false, "error" => "URL not found"]);
 }
@@ -39,10 +41,8 @@ function register()
     $errors = [];
     $response = [];
 
-    if ($_POST) {
-        $data = json_decode($_POST["data"], true);
-
-        $filePath = $data["filePath"];
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $filePath = $_FILES['file']['tmp_name'];
         if (!registerUsers($filePath)) {
             $errors[] = "Error registering users";
         }
@@ -57,32 +57,6 @@ function register()
     }
 
     echo json_encode($response);
-}
-
-function registerUsers($filePath)
-{
-    $db = new Database();
-
-    $handle = fopen($filePath, "r");
-    if ($handle) {
-        while (($line = fgets($handle)) !== false) {
-            // process the line 
-            list($username, $email, $firstName, $familyName, $major, $class) = explode(',', $line);
-            $pass = generateRandomPassword();
-            $db->insertUserQuery([
-                "user" => $username, "password" => $pass,
-                "email" => $email, "admin" => false, "firstName" => $firstName,
-                "familyName" => $familyName, "major" => $major, "class" => $class
-            ]);
-            mailPasswordToUser($username, $pass, $email);
-        }
-
-        fclose($handle);
-        return true;
-    } else {
-        // error opening the file.
-        return false;
-    }
 }
 
 function login()
@@ -144,7 +118,7 @@ function upload()
         );
 
         if (!$ext) {
-            $errors[] = "Invalid file format";
+            $errors[] = "Невалиден формат.";
         } else {
             // Move file
             $tempFileNameWithoutExt = pathinfo($_FILES['file']['tmp_name'])['filename'];
@@ -157,9 +131,9 @@ function upload()
                     $photosInfo = json_decode($_POST["photosInfo"]);
                     $exifData = exif_read_data($filePath, "IFDO", 0);
                     $date = null;
-                    if(isset($exifData["DateTime"])) {
+                    if (isset($exifData["DateTime"])) {
                         $date = convertToSqlDatetime($exifData["DateTime"]);
-                    }                    
+                    }
                     $user = $_SESSION["username"];
                     $addPhotoResult = addPhotoToDatabase($fileNameUniqId . '.' . $ext, $tags, $photosInfo, $date, $user);
                     if (!$addPhotoResult["success"]) {
@@ -442,6 +416,39 @@ function findUsers() {
 
     if ($errors) {
         $response = ["success" => false, "error" => $errors];
+    }
+
+    echo json_encode($response);
+}
+
+function showPersonalInformation($requestURL) {
+    $errors = [];
+    $response = [];
+
+    if (isset($_GET)) {
+        $username = extractUsernameFromUrl($requestURL);
+
+        $db = new Database();
+        $query = $db->selectUserByUsernameQuery(["username" => $username]);
+
+        if ($query["success"]) {
+            $user = $query["data"]->fetch(PDO::FETCH_ASSOC);
+            if ($user) {
+                unset($user['password']);
+            } else {
+                $errors = 'Invalid user';
+            }
+        } else {
+            $errors[] = $query;
+        }
+    } else {
+        $errors[] = "Invalid request";
+    }
+
+    if ($errors) {
+        $response = ["success" => false, "data" => $errors];
+    } else {
+        $response = ["success" => true, "data" => $user];
     }
 
     echo json_encode($response);

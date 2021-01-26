@@ -1,6 +1,6 @@
 img {
-    height: 30px;
-    width: 30px;
+    height: 40px;
+    width: 40px;
 }
 
 #profilePicture {
@@ -24,6 +24,12 @@ img {
 	margin: 10px;
 }
 
+#assignBadgeButton {
+    background-color: #f0940b;
+    color: white;
+    overflow: hidden;
+}
+
 #assignBadgeButton:hover, #backButton:hover {
 	-moz-transition: color 0.35s ease-in-out, background-color 0.35s ease-in-out;
 	-webkit-transition: color 0.35s ease-in-out, background-color 0.35s ease-in-out;
@@ -34,6 +40,11 @@ img {
 	background-color: #ebe0cc;
 	color: #29b4d3;
 	border: none;
+}
+
+#assignBadgeButton:hover {
+    background-color: #16576B;
+	color: white;
 }
 
 #pageCover { /*да видим как да скрива и двете малки сенчици най-отдолу*/
@@ -53,31 +64,77 @@ img {
     border-top: solid 30px #29b4d3;
     border-bottom: solid 30px #29b4d3;
     background-color: rgba(255, 255, 255, 1); 
-    width: 68%;
+    width: 72%;
     position: fixed;
     left: 16%;
     top: 5%;
 }
 
-#badgesPanel li {
+table li {
     display: none;
 }
 
-#badgesPanel img:hover {
+#badgesTable img:hover {
     cursor: pointer;
-    width: 40px;
-	height: 40px;
+    border-bottom: 5px solid;
+    border-color: #f0940b; 
 }
 
-#badgesPanel td {
-    padding: 5px;
+#badgesPanel img {
+    padding: 3px;
 }
 
-/*#showInformationBox {
+#showInformationBox {
     display: block;
 }
 
-#badgesPanel, #infoDetails {
-    width: 50%;
+#infoDetails { 
+    border-top: solid 30px #1d8ba3;
+    border-bottom: solid 30px #1d8ba3;
+    width: 60%;
+    padding: 10px;
+    position: absolute;
+    top: 0px;
+    left: 415px;
+    margin-top: 64px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+#badgesPanel {
+    border-left: solid 2px #1d8ba3;
+    border-right: solid 2px  #1d8ba3;
+    border-top: solid 30px  #1d8ba3;
+    border-bottom: solid 3px #1d8ba3;
+    width: 28%;
+    padding: 10px;
     float: left;
-}*/
+    margin-right: 40px;
+    margin-bottom: 10px;
+}
+
+
+#clear {
+    clear: both;
+}
+
+#badgesButton {
+    float: left;
+}
+
+#fullName, #majorAndClass {
+	margin-right: 2px;
+	text-decoration: none;
+	text-transform: uppercase;
+	color: #16576B;
+	background: -webkit-linear-gradient(#1d8ba3, #f0940b);
+  	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+    font-weight: bold;
+    font-size: 24pt;
+}
+
+#majorAndClass {
+    font-size: 16pt;
+}
+

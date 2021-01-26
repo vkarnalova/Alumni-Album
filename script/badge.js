@@ -63,7 +63,7 @@ function getBadgeIcon() {
 	}
 }
 
-function displayBadges() {
+function displayBadges(isShown) {
 	var user = location.href.substring(location.href.lastIndexOf('/') + 1); //../profila-na-mimi
 	var data = new FormData();
     data.append('user', user);
@@ -76,14 +76,14 @@ function displayBadges() {
 	var allIcons = [];
 	var count = [0, 0];
     ajax('src/api.php/show-badges', settings, function (data) {
-		data.forEach(record => display(record, allIcons, count));
+		data.forEach(record => display(record, allIcons, count, isShown));
     }, function (error) {
         alert(error);
     },
     );
 }
 
-function display(record, allIcons, count) {
+function display(record, allIcons, count, isShown) {
 	var iconIsAlreadyDisplayed = false;
 	for(var i = 0; i < allIcons.length; i++) {
 		if(allIcons[i] == record.iconId) {
@@ -95,21 +95,20 @@ function display(record, allIcons, count) {
 	
 	if(!iconIsAlreadyDisplayed) {
 		allIcons.push(record.iconId);
-		displayUnderNewlyCreatedIcon(record, count);
+		displayUnderNewlyCreatedIcon(record, count, isShown);
 	}
-
-
 }
 
-function displayUnderNewlyCreatedIcon(record, count) {
+function displayUnderNewlyCreatedIcon(record, count, isShown) {
 	var elementId = 'badgesWithIcon' + record.iconId;
-	if(count[0] > 6 || (count[1] == 0 && count[0] == 0)) {
+	if(count[0] > 5 || (count[1] == 0 && count[0] == 0)) {
 		count[1]++;
 		var tr = document.createElement('tr');
 		tr.id = count[1];
 		var td = document.createElement('td');
+		td.id = 'td' + record.iconId;
 		img = document.createElement('img');
-		img.id = elementId;
+		img.id = elementId
 		td.appendChild(img).src = "badge_icons/" + record.iconId + ".png";
 		tr.appendChild(td);
 		document.getElementById("badgesTable").appendChild(tr);
@@ -121,6 +120,7 @@ function displayUnderNewlyCreatedIcon(record, count) {
 		}
 	} else {
 		var td = document.createElement('td');
+		td.id = 'td' + record.iconId;
 		img = document.createElement('img');
 		img.id = elementId;
 		td.appendChild(img).src = "badge_icons/" + record.iconId + ".png";
@@ -128,7 +128,7 @@ function displayUnderNewlyCreatedIcon(record, count) {
 		count[0]++;
 	}
 
-	addEventListenerOnClick(elementId, record.iconId);
+	addEventListenerOnClick(elementId, record.iconId, isShown);
 	displayDetails(record);
 }
 
@@ -136,11 +136,16 @@ function displayUnderAlreadyExistingIcon(record) {
 	displayDetails(record);
 }
 
-function displayDetails(record) { //да добавям ли описанието?
-	var elementId = 'badgesWithIcon' + record.iconId;
+function displayDetails(record) {
+	var elementId = 'td' + record.iconId;
 	var li = document.createElement("li");
-	li.textContent = "\"" +  record.title + "\", ";
-	li.textContent += "възложена от "+ record.assigningUser;
+	li.innerHTML = "👍 \"" +  record.title + "\", ";
+	li.innerHTML += "възложена от "+ record.assigningUser + " ";
+	if(record.description != "") {
+		li.innerHTML += " (" + record.description + ")";
+	}
+	li.innerHTML += "<br>";
+	li.className = elementId;
 	document.getElementById(elementId).appendChild(li);
 }
 
@@ -152,12 +157,42 @@ function hideFullBadgeInformation(elementId) {
 	document.getElementById(elementId).display = "none";
 }
 
-function addEventListenerOnClick(elementId, iconId) {
+function addEventListenerOnClick(elementId, iconId, isShown) {
 	document.getElementById(elementId).addEventListener("click", event => { 
 		event.preventDefault();
-		showInformationBox(iconId)});
+		showInformationBox(iconId, isShown)});
 }
 
-function showInformationBox(iconId) {
-	
+function showInformationBox(iconId, isShown) {
+	if(isShown[iconId - 1] == false) {
+		removeOtherShown(iconId, isShown);
+		document.getElementById("badgesWithIcon"+iconId).style.backgroundColor = "rgba(240,148,11,0.5)";
+		var listItems = document.getElementsByClassName('td'+iconId);
+		for(var i = 0; i < listItems.length; i++) {
+			document.getElementById("badgeDetails").innerHTML +=  listItems[i].innerHTML;
+			document.getElementById("badgeDetails").style.fontWeight = "bold";
+			document.getElementById("badgeDetails").style.fontStyle = "italic";
+		}
+		isShown[iconId - 1] = true;
+	} else {
+		removeOtherShown(iconId, isShown);
+		document.getElementById("badgeDetails").innerHTML = "";
+		document.getElementById("badgesWithIcon" + iconId).style.backgroundColor = "white";
+		isShown[iconId - 1] = false;
+	} 
+}
+
+function removeOtherShown(iconId, isShown) {
+	document.getElementById("badgeDetails").innerHTML = "";
+	for(var i = 0; i < 20; i++) {
+		if(i != iconId - 1) {
+			var current = document.getElementById("badgesWithIcon"+ (i + 1));
+			if(current != null && isShown[i] == true) {
+				document.getElementById("badgesWithIcon"+(i+1)).style.backgroundColor = "white";
+				current.style.cursor = "pointer";
+				isShown[i] = false;
+			}
+		}
+	}
+
 }
