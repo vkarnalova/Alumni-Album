@@ -18,7 +18,7 @@ window.onload = function () {
 }
 
 function uploadFiles() {
-    document.getElementById("errors").innerHTML = '';
+    document.getElementById("messages").innerHTML = '';
     let isInputCorrect = validateInput();
 
     if (isInputCorrect) {
@@ -43,16 +43,16 @@ function uploadFile(file, tags, photosInfo) {
     data.append('file', file);
     data.append('tags', JSON.stringify(tags));
     data.append('photosInfo', JSON.stringify(photosInfo));
-    
+
     const settings = {
         method: 'POST',
         body: data
     };
 
     ajax('src/api.php/upload', settings, function (data) {
-        alert(data);
+        addMessage('Успешно добавяне на снимка.');
     }, function (error) {
-        alert(error);
+        addMessage('Неуспешно добавяне на снимка. ' + error);
     },
     );
 }
@@ -82,25 +82,25 @@ function getPhotosAdditionalInfo() {
     };
 
     return photosInfo;
-    
+
 }
 
 function validateInput() {
     var isInputCorrect = true;
     if (!document.getElementById("class").value) {
-        addError("Випускът е задължително поле.");
+        addMessage("Випускът е задължително поле.");
         isInputCorrect = false;
     }
     if (fileList.length == 0) {
-        addError("Не са избрани файлове.");
+        addMessage("Не са избрани файлове.");
         isInputCorrect = false;
     }
     return isInputCorrect;
 }
 
-function addError(message) {
+function addMessage(message) {
     let errorElement = document.createElement("p");
-    errorElement.classList.add("error");
+    errorElement.classList.add("message");
     errorElement.innerHTML = message;
-    document.getElementById("errors").appendChild(errorElement);
+    document.getElementById("messages").appendChild(errorElement);
 }

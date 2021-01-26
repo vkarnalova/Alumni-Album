@@ -142,7 +142,7 @@ function upload()
         );
 
         if (!$ext) {
-            $errors[] = "Invalid file format";
+            $errors[] = "Невалиден формат.";
         } else {
             // Move file
             $tempFileNameWithoutExt = pathinfo($_FILES['file']['tmp_name'])['filename'];
@@ -155,9 +155,9 @@ function upload()
                     $photosInfo = json_decode($_POST["photosInfo"]);
                     $exifData = exif_read_data($filePath, "IFDO", 0);
                     $date = null;
-                    if(isset($exifData["DateTime"])) {
+                    if (isset($exifData["DateTime"])) {
                         $date = convertToSqlDatetime($exifData["DateTime"]);
-                    }                    
+                    }
                     $user = $_SESSION["username"];
                     $addPhotoResult = addPhotoToDatabase($fileNameUniqId . '.' . $ext, $tags, $photosInfo, $date, $user);
                     if (!$addPhotoResult["success"]) {
