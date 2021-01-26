@@ -28,6 +28,8 @@ if (preg_match("/register$/", $requestURL)) {
     addAvatar();
 } else if (preg_match("/displayUser$/", $requestURL)) {
     getCurrentUser();
+} else if(preg_match("/show-personal-information/", $requestURL)) {
+    showPersonalInformation($requestURL);
 } else {
     echo json_encode(["success" => false, "error" => "URL not found"]);
 }
@@ -413,6 +415,39 @@ function addAvatar()
         $response = ["success" => false, "data" => $errors];
     } else {
         $response = ["success" => true];
+    }
+
+    echo json_encode($response);
+}
+
+function showPersonalInformation($requestURL) {
+    $errors = [];
+    $response = [];
+
+    if (isset($_GET)) {
+        $username = extractUsernameFromUrl($requestURL);
+
+        $db = new Database();
+        $query = $db->selectUserByUsernameQuery(["username" => $username]);
+
+        if ($query["success"]) {
+            $user = $query["data"]->fetch(PDO::FETCH_ASSOC);
+            if ($user) {
+                 unset($user['password']);
+            } else {
+                $errors = 'Invalid user';
+            }
+        } else {
+             $errors[] = $query;
+        }
+    } else {
+        $errors[] = "Invalid request";
+    }
+
+    if ($errors) {
+        $response = ["success" => false, "data" => $errors];
+    } else {
+        $response = ["success" => true, "data" => $user];
     }
 
     echo json_encode($response);
