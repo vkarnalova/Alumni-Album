@@ -78,5 +78,5 @@ function registerUsers($filePath)
 
 function extractUsernameFromUrl($requestURL)
 {
-    return substr($requestURL, strrpos($requestURL, "/") + 1);
+    return substr($requestURL, strrpos($requestURL, "?") + 1);
 }
