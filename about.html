@@ -7,6 +7,8 @@
     <title>Алумни Албум</title>
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/aboutUs.css" />
+    <script defer src="script/ajax.js"></script>
+    <script src="script/findUsers.js"> </script>
 </head>
 
 <body>
@@ -31,6 +33,13 @@
                                 <li>&#128682; <a href="login.html">Изход</a></li>
                             </ul>
 
+                            <section class="dropdown">
+								
+								<input class="search" placeholder="&#x1f50e; Търси потребител..." id="userInput" onkeyup="findUsers(this.value)" type="text">
+								<section class="dropdownContent">
+									
+								</section>
+							</section>
 
                         </nav>
 
