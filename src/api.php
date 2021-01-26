@@ -26,6 +26,8 @@ if (preg_match("/register$/", $requestURL)) {
     updateUserPersonalInfo();
 } else if (preg_match("/avatar$/", $requestURL)) {
     addAvatar();
+} else if (preg_match("/displayUser$/", $requestURL)) {
+    getCurrentUser();
 } else {
     echo json_encode(["success" => false, "error" => "URL not found"]);
 }
@@ -151,8 +153,10 @@ function upload()
                 if (move_uploaded_file($_FILES['file']['tmp_name'], $filePath)) {
                     $tags = json_decode($_POST["tags"]);
                     $photosInfo = json_decode($_POST["photosInfo"]);
-
-                    $addPhotoResult = addPhotoToDatabase($fileNameUniqId . '.' . $ext, $tags, $photosInfo);
+                    $exifData = exif_read_data($filePath, "IFDO", 0);
+                    $date = convertToSqlDatetime($exifData["DateTime"]);
+                    $user = $_SESSION["username"];
+                    $addPhotoResult = addPhotoToDatabase($fileNameUniqId . '.' . $ext, $tags, $photosInfo, $date, $user);
                     if (!$addPhotoResult["success"]) {
                         $errors[] = $addPhotoResult["data"];
                     }
@@ -186,8 +190,9 @@ function search()
         $potok = isset($_POST["potok"]) ? $_POST["potok"] : "";
         $groupNumber = isset($_POST["groupNumber"]) ? $_POST["groupNumber"] : "";
         $occasion = isset($_POST["occasion"]) ? $_POST["occasion"] : "";
+        $date = isset($_POST["date"]) ? $_POST["date"] : "";
         $tags = isset($_POST["tags"]) ? $_POST["tags"] : "";
-        $data = ["major" => $major, "class" => $class, "potok" => $potok, "groupNumber" => $groupNumber, "occasion" => $occasion, "tags" => $tags];
+        $data = ["major" => $major, "class" => $class, "potok" => $potok, "groupNumber" => $groupNumber, "occasion" => $occasion, "date" => $date, "tags" => $tags];
         $db = new Database();
         $files = getFiles($data, $db);
 

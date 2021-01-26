@@ -49,6 +49,8 @@ try {
         potok int,
         groupNumber int,
         occasion VARCHAR(255),
+        date DATETIME,
+        user VARCHAR(30),
         PRIMARY KEY (id)
     )";
     $result = $connection->exec($sql);

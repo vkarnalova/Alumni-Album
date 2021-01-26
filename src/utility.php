@@ -10,12 +10,12 @@ function testInput($input)
     return $input;
 }
 
-function addPhotoToDatabase($fileName, $tags, $photosInfo)
+function addPhotoToDatabase($fileName, $tags, $photosInfo, $date, $user)
 {
     $db = new Database();
 
     if (!isPhotoUploaded($fileName, $db)) {
-        $result = insertPhoto($fileName, $photosInfo, $db);
+        $result = insertPhoto($fileName, $photosInfo, $date, $user, $db);
         if (!$result["success"]) {
             return $result;
         } else {
@@ -39,7 +39,7 @@ function isPhotoUploaded($fileName, $db)
     }
 }
 
-function insertPhoto($fileName, $photosInfo, $db)
+function insertPhoto($fileName, $photosInfo, $date, $user, $db)
 {
     $query = $db->insertPhotoQuery([
         "name" => $fileName,
@@ -47,7 +47,9 @@ function insertPhoto($fileName, $photosInfo, $db)
         "class" => $photosInfo->class,
         "potok" => $photosInfo->potok,
         "groupNumber" => $photosInfo->groupNumber,
-        "occasion" => $photosInfo->occasion
+        "occasion" => $photosInfo->occasion,
+        "date" => $date,
+        "user" => $user
     ]);
 
     if ($query["success"]) {
@@ -173,17 +175,17 @@ function isEmptyString($var) {
 }
 
 function isEmptyArray($data) {
-    return isEmptyString($data["major"]) && isEmptyString($data["class"]) && isEmptyString($data["potok"])  && isEmptyString($data["groupNumber"]) && isEmptyString($data["occasion"]) && isEmptyString($data["tags"]);
+    return isEmptyString($data["major"]) && isEmptyString($data["class"]) && isEmptyString($data["potok"])  && isEmptyString($data["groupNumber"]) && isEmptyString($data["occasion"]) && isEmptyString($data["date"]) && isEmptyString($data["tags"]);
 }
 
 function generateQuery($data) {
     $sql = "";
     if (isEmptyArray($data)) {
-        return "SELECT name FROM photos";
+        return "SELECT name, class, user, date FROM photos";
     } else if (empty($data["tags"])) {
-        $sql = "SELECT name FROM photos WHERE ";
+        $sql = "SELECT name, class, user, date FROM photos WHERE ";
     } else {
-        $sql = "SELECT DISTINCT name FROM photos p JOIN photo_tag pt ON p.id=pt.photoId JOIN tags t ON pt.tagId=t.id WHERE ";
+        $sql = "SELECT DISTINCT name, class, user, date FROM photos p JOIN photo_tag pt ON p.id=pt.photoId JOIN tags t ON pt.tagId=t.id WHERE ";
     }
 
     
@@ -193,6 +195,8 @@ function generateQuery($data) {
         if (empty($value)) {
             continue;
         }
+
+        
         if ($attribute == "tags") {
             $first = True;
             $sql .= "(";
@@ -212,7 +216,16 @@ function generateQuery($data) {
             $sql .= " AND ";
         }
         
-        $sql .=  $attribute ."='". $value . "'";
+        
+        if ($attribute == "date") {
+            //$sql .= "(date BETWEEN " . $value . "00:00:00 AND " . $value . "23:59:59)";
+            $start = $value . " 00:00:00";
+            $end = $value . " 23:59:59";
+            $sql .= "(date BETWEEN '" . $start . "' AND '" . $end . "')";
+        } else { 
+            $sql .=  $attribute ."='". $value . "'";
+        }
+
         $first = False;
     }
 
@@ -222,3 +235,24 @@ function generateQuery($data) {
 }
 
 
+function convertToSqlDatetime($datetime) {
+    $date = DateTime::createFromFormat('Y:m:d H:i:s', $datetime);
+    if ($date) {
+        $sqlDateTime = $date->format('Y-m-d H:i:s');
+        if ($sqlDateTime) {
+            return $sqlDateTime;
+        }
+    }
+
+    return null;
+    
+    
+}
+
+function getCurrentUser() {
+    if(isset($_SESSION["username"])) {
+        return $_SESSION["username"];
+    }
+
+    return null;
+}

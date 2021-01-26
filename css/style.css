@@ -157,8 +157,8 @@ h2, h3 {
 
 
 #footerInfo {
-	position: relative;
-	padding: 3em 0em;
+	
+	padding: 3em;
 	background: url(images/footer-image.png) no-repeat center top;
 	text-align: center;
 	text-transform: uppercase;
