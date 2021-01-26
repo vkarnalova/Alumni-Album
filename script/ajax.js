@@ -10,6 +10,6 @@ const ajax = (url, settings, successCallback, errorCallback) => {
             return successCallback(data.data);
         })
         .catch(error => {
-            alert(error);
+            console.log(error);
         });
 }
