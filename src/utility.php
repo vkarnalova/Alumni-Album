@@ -178,7 +178,9 @@ function isEmptyString($var)
 
 function isEmptyArray($data)
 {
-    return isEmptyString($data["major"]) && isEmptyString($data["class"]) && isEmptyString($data["potok"])  && isEmptyString($data["groupNumber"]) && isEmptyString($data["occasion"]) && isEmptyString($data["date"]) && isEmptyString($data["tags"]);
+    return isEmptyString($data["major"]) && isEmptyString($data["class"]) && isEmptyString($data["potok"])
+        && isEmptyString($data["groupNumber"]) && isEmptyString($data["occasion"])
+        && isEmptyString($data["date"]) && empty($data["tags"]);
 }
 
 function generateQuery($data)
@@ -208,7 +210,7 @@ function generateQuery($data)
         if ($attribute == "tags") {
             $first = True;
             $sql .= "(";
-            $tags = array($data["tags"]);
+            $tags = $data["tags"];
             for ($i = 0; $i < count($tags); $i++) {
                 if (!$first) {
                     $sql .= " OR ";

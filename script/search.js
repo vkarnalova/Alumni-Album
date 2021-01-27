@@ -108,15 +108,18 @@ function searchFiles(checkboxes) {
 
         if (checkboxes[i].value === "tags" && checkboxes[i].checked) {
             let tags = document.getElementsByClassName("tag");
+
             let tagsInput = [];
-            for (let i = 0; i < tags.length; i++) {
-                tagsInput[i] = tags[i].value;
+            for (let j = 0; j < tags.length; j++) {
+                if (tags[j].value) {
+                    tagsInput.push(tags[j].value);
+                }
             }
 
-            data.append(checkboxes[i].value, tagsInput);
-        }
-
-        if (checkboxes[i].checked) {
+            if (tagsInput) {
+                data.append(checkboxes[i].value, JSON.stringify(tagsInput));
+            }
+        } else if (checkboxes[i].checked) {
             const attribute = checkboxes[i].value;
             const value = document.getElementById(checkboxes[i].value).value;
             data.append(attribute, value);

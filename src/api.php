@@ -170,7 +170,7 @@ function search()
         $groupNumber = isset($_POST["groupNumber"]) ? $_POST["groupNumber"] : "";
         $occasion = isset($_POST["occasion"]) ? $_POST["occasion"] : "";
         $date = isset($_POST["date"]) ? $_POST["date"] : "";
-        $tags = isset($_POST["tags"]) ? $_POST["tags"] : "";
+        $tags = isset($_POST["tags"]) ? json_decode($_POST["tags"]) : "";
         $data = ["major" => $major, "class" => $class, "potok" => $potok, "groupNumber" => $groupNumber, "occasion" => $occasion, "date" => $date, "tags" => $tags];
         $db = new Database();
         $files = getFiles($data, $db);
