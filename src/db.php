@@ -52,7 +52,7 @@ class Database
         $sql = "INSERT INTO photos(name, major, class, potok, groupNumber, occasion, date, user) VALUES (:name, :major, :class, :potok, :groupNumber, :occasion, :date, :user)";
         $this->insertPhotoStatement = $this->connection->prepare($sql);
 
-        $sql = "SELECT * FROM photos WHERE name=:name";
+        $sql = "SELECT * FROM photos WHERE name=:name AND user=:user";
         $this->selectPhotoByNameStatement = $this->connection->prepare($sql);
 
         // tags table statements
@@ -137,7 +137,7 @@ class Database
     public function selectPhotoByNameQuery($data)
     {
         try {
-            // ["name" => "..."]
+            // ["name" => "...", "user" => "..."]
             $this->selectPhotoByNameStatement->execute($data);
 
             return ["success" => true, "data" => $this->selectPhotoByNameStatement];

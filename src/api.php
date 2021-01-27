@@ -20,7 +20,7 @@ if (preg_match("/register$/", $requestURL)) {
     addBadge();
 } else if (preg_match("/show-badges/", $requestURL)) {
     showFriendBadges();
-} else if(preg_match("/show-my-badges$/", $requestURL)) {
+} else if (preg_match("/show-my-badges$/", $requestURL)) {
     showMyBadges();
 } else if (preg_match("/get-user$/", $requestURL)) {
     getMyUserPersonalInfo();
@@ -32,7 +32,7 @@ if (preg_match("/register$/", $requestURL)) {
     displayUser();
 } else if (preg_match("/findUsers$/", $requestURL)) {
     findUsers();
-} else if(preg_match("/show-personal-information/", $requestURL)) {
+} else if (preg_match("/show-personal-information/", $requestURL)) {
     showPersonalInformation($requestURL);
 } else {
     echo json_encode(["success" => false, "error" => "URL not found"]);
@@ -123,29 +123,24 @@ function upload()
             $errors[] = "Невалиден формат.";
         } else {
             // Move file
-            $tempFileNameWithoutExt = pathinfo($_FILES['file']['tmp_name'])['filename'];
-            $fileNameUniqId = uniqid($tempFileNameWithoutExt);
+            $fileNameUniqId = md5_file($_FILES['file']['tmp_name']);
             $filePath = sprintf('../uploads/%s.%s', $fileNameUniqId, $ext);
 
-            if (!file_exists($filePath)) {
-                if (move_uploaded_file($_FILES['file']['tmp_name'], $filePath)) {
-                    $tags = json_decode($_POST["tags"]);
-                    $photosInfo = json_decode($_POST["photosInfo"]);
-                    $exifData = exif_read_data($filePath, "IFDO", 0);
-                    $date = null;
-                    if (isset($exifData["DateTime"])) {
-                        $date = convertToSqlDatetime($exifData["DateTime"]);
-                    }
-                    $user = $_SESSION["username"];
-                    $addPhotoResult = addPhotoToDatabase($fileNameUniqId . '.' . $ext, $tags, $photosInfo, $date, $user);
-                    if (!$addPhotoResult["success"]) {
-                        $errors[] = $addPhotoResult["data"];
-                    }
-                } else {
-                    $errors[] = 'Failed to move uploaded file.';
+            if (move_uploaded_file($_FILES['file']['tmp_name'], $filePath)) {
+                $tags = json_decode($_POST["tags"]);
+                $photosInfo = json_decode($_POST["photosInfo"]);
+                $exifData = exif_read_data($filePath, "IFDO", 0);
+                $date = null;
+                if (isset($exifData["DateTime"])) {
+                    $date = convertToSqlDatetime($exifData["DateTime"]);
+                }
+                $user = $_SESSION["username"];
+                $addPhotoResult = addPhotoToDatabase($fileNameUniqId . '.' . $ext, $tags, $photosInfo, $date, $user);
+                if (!$addPhotoResult["success"]) {
+                    $errors[] = $addPhotoResult["data"];
                 }
             } else {
-                $errors[] = "File alredy exists";
+                $errors[] = 'Failed to move uploaded file.';
             }
         }
     } else {
@@ -153,9 +148,12 @@ function upload()
     }
 
     if ($errors) {
+        if (isset($_FILES['file'])) {
+            array_push($errors, $_FILES['file']['name']);
+        }
         $response = ["success" => false, "error" => $errors];
     } else {
-        $response = ["success" => true];
+        $response = ["success" => true, "data" => $_FILES['file']['name']];
     }
 
     echo json_encode($response);
@@ -265,13 +263,14 @@ function addBadge()
     echo json_encode($response);
 }
 
-function showMyBadges() {
+function showMyBadges()
+{
     $errors = [];
     $response = [];
 
     $username = $_SESSION["username"];
- 
-    if($username) {
+
+    if ($username) {
         $response = showBadges($username);
     } else {
         $errors[] = "Invalid request";
@@ -280,7 +279,8 @@ function showMyBadges() {
     echo json_encode($response);
 }
 
-function showFriendBadges() {
+function showFriendBadges()
+{
     $errors = [];
     $response = [];
 
@@ -306,7 +306,7 @@ function showBadges($username)
     $listOfBadges = $query["data"]->fetchAll(PDO::FETCH_ASSOC);
 
     if ($query["success"]) {
-         $response = ["success" => true, "data" => $listOfBadges];
+        $response = ["success" => true, "data" => $listOfBadges];
     } else {
         $response = ["success" => false];
     }
@@ -420,7 +420,8 @@ function addAvatar()
     echo json_encode($response);
 }
 
-function findUsers() {
+function findUsers()
+{
     $errors = [];
     $response = [];
 
@@ -447,7 +448,8 @@ function findUsers() {
     echo json_encode($response);
 }
 
-function showPersonalInformation($requestURL) {
+function showPersonalInformation($requestURL)
+{
     $errors = [];
     $response = [];
 
@@ -480,17 +482,17 @@ function showPersonalInformation($requestURL) {
     echo json_encode($response);
 }
 
-function displayUser() {
+function displayUser()
+{
     $errors = [];
     $response = [];
 
     if (isset($_GET)) {
         $username = getCurrentUser();
-        
+
 
         if ($username) {
             $response = ["success" => true, "data" => $username];
-            
         } else {
             $response = ["success" => false];
         }

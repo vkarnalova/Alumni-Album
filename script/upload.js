@@ -51,9 +51,10 @@ function uploadFile(file, tags, photosInfo) {
     };
 
     ajax('src/api.php/upload', settings, function (data) {
-        addMessage('Успешно добавяне на снимка.');
+        addMessage('Успешно добавяне на снимка ' + data + '.');
     }, function (error) {
-        addMessage('Неуспешно добавяне на снимка. ' + error);
+        let fileName = error[1] ? " " + error[1] : '';
+        addMessage('Неуспешно добавяне на снимка' + fileName + '. ' + error[0]);
     },
     );
 }

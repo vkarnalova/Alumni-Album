@@ -14,7 +14,7 @@ function addPhotoToDatabase($fileName, $tags, $photosInfo, $date, $user)
 {
     $db = new Database();
 
-    if (!isPhotoUploaded($fileName, $db)) {
+    if (!isPhotoUploaded($fileName, $user, $db)) {
         $result = insertPhoto($fileName, $photosInfo, $date, $user, $db);
         if (!$result["success"]) {
             return $result;
@@ -23,13 +23,13 @@ function addPhotoToDatabase($fileName, $tags, $photosInfo, $date, $user)
             return addTagsForPhoto($photoId, $tags, $db);
         }
     } else {
-        return ["success" => false, "data" => "Photo already exists."];
+        return ["success" => false, "data" => "Снимката вече е добавена от вас."];
     }
 }
 
-function isPhotoUploaded($fileName, $db)
+function isPhotoUploaded($fileName, $user, $db)
 {
-    $query = $db->selectPhotoByNameQuery(["name" => $fileName]);
+    $query = $db->selectPhotoByNameQuery(["name" => $fileName, "user" => $user]);
 
     if ($query["success"]) {
         $photo = $query["data"]->fetch(PDO::FETCH_ASSOC);
@@ -262,8 +262,9 @@ function getCurrentUser()
     return null;
 }
 
-function getUsers($data, $db) {    
-    
+function getUsers($data, $db)
+{
+
     if (isEmptyString($data["username"])) {
         return ["success" => false, "data" => "Няма намерени потребители."];
     }
