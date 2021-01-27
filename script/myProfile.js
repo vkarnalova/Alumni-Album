@@ -170,7 +170,7 @@ function addRegisterUsersButton() {
         messageAdminSection.setAttribute("id", "messageAdminSection");
 
         let adminSection = document.getElementById("adminSection");
-        label.innerHTML = "<p id=\"reg\"> Регистрирай потребители!<\p>";
+        label.innerHTML = "Регистрирай потребители!";
 
         adminSection.appendChild(registerUsersInput);
         adminSection.appendChild(registerUsersButton);
@@ -199,15 +199,11 @@ function registerUsers(file) {
 }
 
 function showSubmittionForm() {
-    	document.getElementById("reg").innerHTML = "Регистрирай потре";
-    	document.getElementById("reg").style.color = "rgba(255, 255, 255, 0.3)";
 	document.getElementById("pageCover").style.display = "block";
 	document.getElementById("formSection").style.display = "block";
 }
 
 function hideSubmittionForm() {
-    	document.getElementById("reg").innerHTML = "Регистрирай потребител!";
-    	document.getElementById("reg").style.color = "white";
 	document.getElementById("pageCover").style.display = "none";
     	document.getElementById("formSection").style.display = "none";
     	location.reload();
