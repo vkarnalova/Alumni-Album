@@ -199,15 +199,18 @@ function registerUsers(file) {
 }
 
 function showSubmittionForm() {
-    console.log("vlqzohme");
+    	document.getElementById("reg").innerHTML = "Регистрирай потре";
+    	document.getElementById("reg").style.color = "rgba(255, 255, 255, 0.3)";
 	document.getElementById("pageCover").style.display = "block";
 	document.getElementById("formSection").style.display = "block";
 }
 
 function hideSubmittionForm() {
+    	document.getElementById("reg").innerHTML = "Регистрирай потребител!";
+    	document.getElementById("reg").style.color = "white";
 	document.getElementById("pageCover").style.display = "none";
-    document.getElementById("formSection").style.display = "none";
-    location.reload();
+    	document.getElementById("formSection").style.display = "none";
+    	location.reload();
 }
 
 function showSuccessMessage() {
