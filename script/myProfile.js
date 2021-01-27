@@ -188,9 +188,10 @@ function registerUsers(file) {
         body: data
     };
 
-    ajax('src/api.php/register', settings, function (data) {
-        document.getElementById("messageAdminSection").innerHTML = 'Успешно регистриране на потребители.';
-        document.getElementById("registerUsersInput").value = "";
+    ajax('src/api.php/register', settings, function (data) {        
+	document.getElementById("messageAdminSection").innerHTML = '&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Успешно регистриране на потребители!';
+        document.getElementById("messageAdminSection").style.color = "green";
+        document.getElementById("messageAdminSection").style.fontStyle = "italic";
     }, function (error) {
         document.getElementById("messageAdminSection").innerHTML = 'Неуспешно регистриране на потребители.';
     },
