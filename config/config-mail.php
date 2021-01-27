@@ -1,15 +1,17 @@
 <?php
 
-function startsWith ($string, $startString) { 
-    $len = strlen($startString); 
-    return (substr($string, 0, $len) === $startString); 
-} 
+function startsWith($string, $startString)
+{
+	$len = strlen($startString);
+	return (substr($string, 0, $len) === $startString);
+}
 
-function modifySendmailIni($sendMailIniPath) {
+function modifySendmailIni($sendMailIniPath)
+{
 	$configfile = fopen($sendMailIniPath, "r") or die("Unable to open file!");
 	$content = "";
-    while (($line = fgets($configfile)) !== false) {
-        if (startsWith($line, "smtp_server")) {
+	while (($line = fgets($configfile)) !== false) {
+		if (startsWith($line, "smtp_server")) {
 			$content .= "smtp_server=smtp.gmail.com\n";
 		} else if (startsWith($line, "smtp_port")) {
 			$content .= "smtp_port=587\n";
@@ -30,13 +32,14 @@ function modifySendmailIni($sendMailIniPath) {
 		} else {
 			$content .= $line;
 		}
-    }
-	
-    fclose($configfile);	
+	}
+
+	fclose($configfile);
 	file_put_contents($sendMailIniPath, $content);
 }
 
-function modifyPhpIni($phpIniPath, $sendMailExePath) {
+function modifyPhpIni($phpIniPath, $sendMailExePath)
+{
 	$configfile = fopen($phpIniPath, "r") or die("Unable to open file!");
 	$content = "";
 	while (($line = fgets($configfile)) !== false) {
@@ -45,9 +48,9 @@ function modifyPhpIni($phpIniPath, $sendMailExePath) {
 			break;
 		}
 	}
-	
-    while (($line = fgets($configfile)) !== false) {
-        if (startsWith($line, "SMTP=localhost")) {
+
+	while (($line = fgets($configfile)) !== false) {
+		if (startsWith($line, "SMTP=localhost")) {
 			$content .= ";" . "$line";
 		} else if (startsWith($line, "smtp_port")) {
 			$content .= ";" . "$line";
@@ -60,20 +63,18 @@ function modifyPhpIni($phpIniPath, $sendMailExePath) {
 		} else {
 			$content .= $line;
 		}
-    }
-	
-    fclose($configfile);	
+	}
+
+	fclose($configfile);
 	file_put_contents($phpIniPath, $content);
 }
 
 try {
-	$sendMailIniPath = "D:\\xampp\\sendmail\\sendmail.ini";
-	$phpIniPath = "D:\\xampp\\php\\php.ini";
-	$sendMailExePath = "D:\\xampp\\sendmail\\sendmail.exe";
+	$sendMailIniPath = "C:\\xampp\\sendmail\\sendmail.ini";
+	$phpIniPath = "C:\\xampp\\php\\php.ini";
+	$sendMailExePath = "C:\\xampp\\sendmail\\sendmail.exe";
 	modifySendMailIni($sendMailIniPath);
 	modifyPhpIni($phpIniPath, $sendMailExePath);
-
-    
-} catch (PDOException $error) {
-    echo $error->getMessage();
+} catch (Exception $error) {
+	echo $error->getMessage();
 }
