@@ -1,3 +1,4 @@
 Velina,karnalova@uni-sofia.bg,Велина,Карналова,кн,2021
 Rosina,rosinaig@uni-sofia.bg,Росина,Георгиева,кн,2021
 Maria,msbaleva@uni-sofia.bg,Мария,Балева,кн,2021
+Милен,milenp@fmi.uni-sofia.bg,Милен,Петров,информатика,2012
